@@ -1,10 +1,16 @@
 {
-  "name": "hexlant-contract",
-  "files": [
-    "/contracts/**/*.sol",
-    "/build/contracts/*.json",
-    "!/contracts/mocks/**/*"
-  ],
+  "name": "@seongeun/standard-contract",
+  "author": "Seongeun Cho",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cseongeun/standard-contracts"
+  },
+  "version": "0.0.4",
+  "description": "",
   "scripts": {
     "compile": "hardhat compile",
     "coverage": "env COVERAGE=true hardhat coverage",
@@ -18,9 +24,10 @@
     "lint:sol": "solhint 'contracts/**/*.sol' && prettier -c 'contracts/**/*.sol'",
     "lint:sol:fix": "prettier --write \"contracts/**/*.sol\"",
     "clean": "hardhat clean && rimraf build contracts/build",
+    "build": "tsc --build",
+    "autopublish": "npm run build; npm version patch; npm publish",
     "test": "hardhat test"
   },
-  "license": "MIT",
   "devDependencies": {
     "@ethersproject/abi": "^5.7.0",
     "@ethersproject/providers": "^5.7.0",
