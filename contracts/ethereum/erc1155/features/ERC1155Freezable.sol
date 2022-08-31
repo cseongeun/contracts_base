@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import { ERC1155 } from "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 
-abstract contract ERC20Freezable is ERC20 {
+abstract contract ERC1155Freezable is ERC1155 {
   /**
    * @dev user freezed
    * */
@@ -39,13 +39,16 @@ abstract contract ERC20Freezable is ERC20 {
   }
 
   function _beforeTokenTransfer(
+    address operator,
     address from,
     address to,
-    uint256 amount
+    uint256[] memory ids,
+    uint256[] memory amounts,
+    bytes memory data
   ) internal virtual override {
-    super._beforeTokenTransfer(from, to, amount);
+    super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
 
-    require(!freezed[from], "ERC20Freezable: from freezed");
-    require(!freezed[_msgSender()], "ERC20Freezable: sender freezed");
+    require(!freezed[from], "ERC1155Freezable: from freezed");
+    require(!freezed[_msgSender()], "ERC1155Freezable: sender freezed");
   }
 }

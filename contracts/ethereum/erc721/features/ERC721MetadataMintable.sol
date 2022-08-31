@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { KIP17URIStorage } from "@klaytn/contracts/KIP/token/KIP17/extensions/KIP17URIStorage.sol";
+import { ERC721URIStorage } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 
-abstract contract ERC721MetadataMintable is KIP17URIStorage {
+abstract contract ERC721MetadataMintable is ERC721URIStorage {
   /**
    * @dev See {IKIP17metadataMintable-mintWithTokenURI}
    *
