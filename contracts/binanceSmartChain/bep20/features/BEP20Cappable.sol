@@ -1,6 +1,4 @@
 // SPDX-License-Identifier: MIT
-// OpenZeppelin Contracts v4.4.1 (token/BEP20/extensions/BEP20Capped.sol)
-
 pragma solidity ^0.8.0;
 
 import { BEP20 } from "../BEP20.sol";
@@ -11,12 +9,8 @@ import { BEP20 } from "../BEP20.sol";
 abstract contract BEP20Capped is BEP20 {
   uint256 private immutable _cap;
 
-  /**
-   * @dev Sets the value of the `cap`. This value is immutable, it can only be
-   * set once during construction.
-   */
-  constructor(uint256 cap_) {
-    require(cap_ > 0, "BEP20Capped: cap is 0");
+  function _setCap() internal virtual {
+    require(cap_ > 0, "ERC20Capped: cap is 0");
     _cap = cap_;
   }
 
