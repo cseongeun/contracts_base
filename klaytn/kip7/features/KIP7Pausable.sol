@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { KIP17 } from "@klaytn/contracts/KIP/token/KIP17/KIP17.sol";
+import { KIP7 } from "../KIP7.sol";
 import { Pausable } from "@openzeppelin/contracts/security/Pausable.sol";
 
-abstract contract KIP17Pausable is KIP17, Pausable {
+abstract contract KIP7Pausable is KIP7, Pausable {
   /**
-   * @dev See {KIP17-_beforeTokenTransfer}.
+   * @dev See {KIP7-_beforeTokenTransfer}.
    *
    * Requirements:
    *
@@ -15,10 +15,10 @@ abstract contract KIP17Pausable is KIP17, Pausable {
   function _beforeTokenTransfer(
     address from,
     address to,
-    uint256 tokenId
+    uint256 amount
   ) internal virtual override {
-    super._beforeTokenTransfer(from, to, tokenId);
+    super._beforeTokenTransfer(from, to, amount);
 
-    require(!paused(), "KIP17Pausable: token transfer while paused");
+    require(!paused(), "KIP7Pausable: token transfer while paused");
   }
 }

@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { KIP7 } from "@klaytn/contracts/KIP/token/KIP7.sol";
+import { KIP7 } from "../KIP7.sol";
+import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 
 abstract contract KIP7Lockable is KIP7 {
   /**
@@ -68,7 +69,7 @@ abstract contract KIP7Lockable is KIP7 {
       "KIP7Lockable: Tokens already locked"
     );
     require(amount != 0, "KIP7Lockable: Amount can not be zero");
-    require(_balances[account] >= amount, "KIP7Lockable: Not enough amount");
+    require(balanceOf(account) >= amount, "KIP7Lockable: Not enough amount");
 
     if (locked[account][reason].amount == 0) lockReason[account].push(reason);
 
@@ -109,7 +110,7 @@ abstract contract KIP7Lockable is KIP7 {
             "KIP7Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
             "with reasons ",
-            Strings.toHexString(uint160(reasons[i]))
+            string(abi.encodePacked(reasons[i]))
           )
         )
       );
@@ -141,7 +142,7 @@ abstract contract KIP7Lockable is KIP7 {
       "KIP7Lockable: Tokens already locked"
     );
     require(amount != 0, "KIP7Lockable: Amount can not be zero");
-    require(_balances[msg.sender] >= amount, "KIP7Lockable: Not enough amount");
+    require(balanceOf(msg.sender) >= amount, "KIP7Lockable: Not enough amount");
 
     _transfer(_msgSender(), account, amount);
     _lock(account, amount, reason, release);
@@ -177,7 +178,7 @@ abstract contract KIP7Lockable is KIP7 {
             "KIP7Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
             "with reasons ",
-            Strings.toHexString(uint160(reasons[i]))
+            string(abi.encodePacked(reasons[i]))
           )
         )
       );
@@ -289,7 +290,7 @@ abstract contract KIP7Lockable is KIP7 {
       "KIP7Lockable: No tokens locked"
     );
     require(amount != 0, "KIP7Lockable: Amount can not be zero");
-    require(_balances[account] >= amount, "KIP7Lockable: Not enough amount");
+    require(balanceOf(account) >= amount, "KIP7Lockable: Not enough amount");
 
     _transfer(account, address(this), amount);
 

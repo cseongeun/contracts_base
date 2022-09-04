@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 
 abstract contract ERC20Lockable is ERC20 {
   /**
@@ -68,7 +69,7 @@ abstract contract ERC20Lockable is ERC20 {
       "ERC20Lockable: Tokens already locked"
     );
     require(amount != 0, "ERC20Lockable: Amount can not be zero");
-    require(_balances[account] >= amount, "ERC20Lockable: Not enough amount");
+    require(balanceOf(account) >= amount, "ERC20Lockable: Not enough amount");
 
     if (locked[account][reason].amount == 0) lockReason[account].push(reason);
 
@@ -109,7 +110,7 @@ abstract contract ERC20Lockable is ERC20 {
             "ERC20Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
             "with reasons ",
-            Strings.toHexString(uint160(reasons[i]))
+            string(abi.encodePacked(reasons[i]))
           )
         )
       );
@@ -142,7 +143,7 @@ abstract contract ERC20Lockable is ERC20 {
     );
     require(amount != 0, "ERC20Lockable: Amount can not be zero");
     require(
-      _balances[msg.sender] >= amount,
+      balanceOf(msg.sender) >= amount,
       "ERC20Lockable: Not enough amount"
     );
 
@@ -180,7 +181,7 @@ abstract contract ERC20Lockable is ERC20 {
             "ERC20Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
             "with reasons ",
-            Strings.toHexString(uint160(reasons[i]))
+            string(abi.encodePacked(reasons[i]))
           )
         )
       );
@@ -292,7 +293,7 @@ abstract contract ERC20Lockable is ERC20 {
       "ERC20Lockable: No tokens locked"
     );
     require(amount != 0, "ERC20Lockable: Amount can not be zero");
-    require(_balances[account] >= amount, "ERC20Lockable: Not enough amount");
+    require(balanceOf(account) >= amount, "ERC20Lockable: Not enough amount");
 
     _transfer(account, address(this), amount);
 

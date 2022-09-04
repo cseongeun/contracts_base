@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { KIP7 } from "@klaytn/contracts/KIP/token/KIP7.sol";
+import { KIP7 } from "../KIP7.sol";
 
 abstract contract KIP7Freezable is KIP7 {
   /**

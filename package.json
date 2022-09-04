@@ -80,8 +80,6 @@
   },
   "dependencies": {
     "@klaytn/contracts": "^1.0.3",
-    "@openzeppelin/contracts": "^4.7.3",
-    "install": "^0.13.0",
-    "npm": "^8.18.0"
+    "@openzeppelin/contracts": "^4.7.3"
   }
 }

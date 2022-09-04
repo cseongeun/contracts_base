@@ -7,9 +7,9 @@ import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
  * @dev Extension of {ERC20} that adds a cap to the supply of tokens.
  */
 abstract contract ERC20Capped is ERC20 {
-  uint256 private immutable _cap;
+  uint256 private _cap;
 
-  function _setCap() internal virtual {
+  function _setCap(uint256 cap_) internal virtual {
     require(cap_ > 0, "ERC20Capped: cap is 0");
     _cap = cap_;
   }

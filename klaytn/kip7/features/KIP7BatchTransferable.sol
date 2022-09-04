@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { KIP7 } from "@openzeppelin/contracts/token/KIP7/KIP7.sol";
+import { KIP7 } from "../KIP7.sol";
+import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
  * @dev Extension of {KIP7} that adds batch transfer of tokens.
@@ -31,7 +32,7 @@ abstract contract KIP7BatchTransferable is KIP7 {
             "KIP7BatchTransfable: can not transfer ",
             Strings.toHexString(uint256(amounts[i]), 32),
             "tokens to ",
-            Strings.toHexString(uint160(accounts[index]), 20)
+            Strings.toHexString(uint160(accounts[i]), 20)
           )
         )
       );

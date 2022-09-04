@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import { BEP20 } from "../BEP20.sol";
+import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 
 abstract contract BEP20Lockable is BEP20 {
   /**
@@ -68,7 +69,7 @@ abstract contract BEP20Lockable is BEP20 {
       "BEP20Lockable: Tokens already locked"
     );
     require(amount != 0, "BEP20Lockable: Amount can not be zero");
-    require(_balances[account] >= amount, "BEP20Lockable: Not enough amount");
+    require(balanceOf(account) >= amount, "BEP20Lockable: Not enough amount");
 
     if (locked[account][reason].amount == 0) lockReason[account].push(reason);
 
@@ -108,8 +109,7 @@ abstract contract BEP20Lockable is BEP20 {
           abi.encodePacked(
             "BEP20Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
-            "with reasons ",
-            Strings.toHexString(uint160(reasons[i]))
+            "with reasons "
           )
         )
       );
@@ -142,7 +142,7 @@ abstract contract BEP20Lockable is BEP20 {
     );
     require(amount != 0, "BEP20Lockable: Amount can not be zero");
     require(
-      _balances[msg.sender] >= amount,
+      balanceOf(msg.sender) >= amount,
       "BEP20Lockable: Not enough amount"
     );
 
@@ -180,7 +180,7 @@ abstract contract BEP20Lockable is BEP20 {
             "BEP20Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
             "with reasons ",
-            Strings.toHexString(uint160(reasons[i]))
+            string(abi.encodePacked(reasons[i]))
           )
         )
       );
@@ -292,7 +292,7 @@ abstract contract BEP20Lockable is BEP20 {
       "BEP20Lockable: No tokens locked"
     );
     require(amount != 0, "BEP20Lockable: Amount can not be zero");
-    require(_balances[account] >= amount, "BEP20Lockable: Not enough amount");
+    require(balanceOf(account) >= amount, "BEP20Lockable: Not enough amount");
 
     _transfer(account, address(this), amount);
 

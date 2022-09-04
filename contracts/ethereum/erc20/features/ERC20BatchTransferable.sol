@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import { ERC20 } from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
  * @dev Extension of {ERC20} that adds batch transfer of tokens.
@@ -17,7 +18,7 @@ abstract contract ERC20BatchTransferable is ERC20 {
   function batchTransfer(
     address[] calldata accounts,
     uint256[] calldata amounts
-  ) public virtual override returns (bool) {
+  ) public virtual returns (bool) {
     require(
       accounts.length == amounts.length,
       "ERC20BatchTransferable: invalid length"
@@ -31,7 +32,7 @@ abstract contract ERC20BatchTransferable is ERC20 {
             "ERC20BatchTransfable: can not transfer ",
             Strings.toHexString(uint256(amounts[i]), 32),
             "tokens to ",
-            Strings.toHexString(uint160(accounts[index]), 20)
+            Strings.toHexString(uint160(accounts[i]), 20)
           )
         )
       );

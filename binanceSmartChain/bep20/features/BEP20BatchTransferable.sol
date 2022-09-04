@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { BEP20 } from "@openzeppelin/contracts/token/BEP20/BEP20.sol";
+import { BEP20 } from "../BEP20.sol";
+import { Strings } from "@openzeppelin/contracts/utils/Strings.sol";
 
 /**
  * @dev Extension of {BEP20} that adds batch transfer of tokens.
@@ -17,7 +18,7 @@ abstract contract BEP20BatchTransferable is BEP20 {
   function batchTransfer(
     address[] calldata accounts,
     uint256[] calldata amounts
-  ) public virtual override returns (bool) {
+  ) public virtual returns (bool) {
     require(
       accounts.length == amounts.length,
       "BEP20BatchTransferable: invalid length"
@@ -31,7 +32,7 @@ abstract contract BEP20BatchTransferable is BEP20 {
             "BEP20BatchTransfable: can not transfer ",
             Strings.toHexString(uint256(amounts[i]), 32),
             "tokens to ",
-            Strings.toHexString(uint160(accounts[index]), 20)
+            Strings.toHexString(uint160(accounts[i]), 20)
           )
         )
       );

@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { BEP20 } from "../BEP20.sol";
+import { KIP7 } from "../KIP7.sol";
 
 /**
- * @dev Extension of {BEP20} that adds a cap to the supply of tokens.
+ * @dev Extension of {KIP7} that adds a cap to the supply of tokens.
  */
-abstract contract BEP20Capped is BEP20 {
+abstract contract KIP7Capped is KIP7 {
   uint256 private immutable _cap;
 
-  function _setCap() internal virtual {
-    require(cap_ > 0, "ERC20Capped: cap is 0");
+  function _setCap(uint256 cap_) internal virtual {
+    require(cap_ > 0, "KIP7Capped: cap is 0");
     _cap = cap_;
   }
 
@@ -22,10 +22,10 @@ abstract contract BEP20Capped is BEP20 {
   }
 
   /**
-   * @dev See {BEP20-_mint}.
+   * @dev See {KIP7-_mint}.
    */
   function _mint(address account, uint256 amount) internal virtual override {
-    require(BEP20.totalSupply() + amount <= cap(), "BEP20Capped: cap exceeded");
+    require(KIP7.totalSupply() + amount <= cap(), "KIP7Capped: cap exceeded");
     super._mint(account, amount);
   }
 }

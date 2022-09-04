@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import { KIP17 } from "@klaytn/contracts/KIP/token/KIP17/KIP17.sol";
 
-abstract contract KIP17Freezable is KIP7 {
+abstract contract KIP17Freezable is KIP17 {
   /**
    * @dev user freezed
    * */
