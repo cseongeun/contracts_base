@@ -80,6 +80,36 @@ abstract contract ERC20Lockable is ERC20 {
     return true;
   }
 
+  function _batchLock(
+    address[] calldata accounts,
+    uint256[] calldata amounts,
+    bytes32[] calldata reasons,
+    uint256[] calldata releases
+  ) internal virtual returns (bool) {
+    require(
+      accounts.length == amounts.length &&
+        amounts.length == reasons.length &&
+        reasons.length == releases.length,
+      "ERC20Lockable: invalid length"
+    );
+
+    for (uint256 i = 0; i < accounts.length; i++) {
+      require(
+        _lock(accounts[i], amounts[i], reasons[i], releases[i]),
+        string(
+          abi.encodePacked(
+            "ERC20Lockable: unable to lock token on account ",
+            Strings.toHexString(uint160(accounts[i]), 20),
+            "with reasons ",
+            Strings.toHexString(uint160(reasons[i]))
+          )
+        )
+      );
+    }
+
+    return true;
+  }
+
   /**
    * @dev Transfers and Locks a specified amount of tokens,
    *      for a specified reason and time
@@ -110,6 +140,36 @@ abstract contract ERC20Lockable is ERC20 {
 
     _transfer(_msgSender(), account, amount);
     _lock(account, amount, reason, release);
+    return true;
+  }
+
+  function _batchTransferWithLock(
+    address[] calldata accounts,
+    uint256[] calldata amounts,
+    bytes32[] calldata reasons,
+    uint256[] calldata releases
+  ) internal virtual returns (bool) {
+    require(
+      accounts.length == amounts.length &&
+        amounts.length == reasons.length &&
+        reasons.length == releases.length,
+      "ERC20Lockable: invalid length"
+    );
+
+    for (uint256 i = 0; i < accounts.length; i++) {
+      require(
+        _transferWithLock(accounts[i], amounts[i], reasons[i], releases[i]),
+        string(
+          abi.encodePacked(
+            "ERC20Lockable: unable to lock token on account ",
+            Strings.toHexString(uint160(accounts[i]), 20),
+            "with reasons ",
+            Strings.toHexString(uint160(reasons[i]))
+          )
+        )
+      );
+    }
+
     return true;
   }
 
