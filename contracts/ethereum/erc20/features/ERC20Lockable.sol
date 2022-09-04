@@ -80,6 +80,14 @@ abstract contract ERC20Lockable is ERC20 {
     return true;
   }
 
+  /**
+   * @dev Multiple locks a specified amount of tokens against an address,
+   *      for a specified reason and release
+   * @param accounts Each Account to be locked
+   * @param amounts Each number of tokens to be locked
+   * @param reasons Each the reason to lock tokens
+   * @param releases Each release time in seconds
+   */
   function _batchLock(
     address[] calldata accounts,
     uint256[] calldata amounts,
@@ -143,6 +151,14 @@ abstract contract ERC20Lockable is ERC20 {
     return true;
   }
 
+  /**
+   * @dev Multiple Transfers and Locks a specified amount of tokens,
+   *      for a specified reason and time
+   * @param accounts Each address to which tokens are to be transfered
+   * @param amounts Each number of tokens to be transfered and locked
+   * @param reasons Each the reason to lock tokens
+   * @param releases Each release time in seconds
+   */
   function _batchTransferWithLock(
     address[] calldata accounts,
     uint256[] calldata amounts,

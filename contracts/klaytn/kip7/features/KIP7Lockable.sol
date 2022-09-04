@@ -81,6 +81,44 @@ abstract contract KIP7Lockable is KIP7 {
   }
 
   /**
+   * @dev Multiple locks a specified amount of tokens against an address,
+   *      for a specified reason and release
+   * @param accounts Each Account to be locked
+   * @param amounts Each number of tokens to be locked
+   * @param reasons Each the reason to lock tokens
+   * @param releases Each release time in seconds
+   */
+  function _batchLock(
+    address[] calldata accounts,
+    uint256[] calldata amounts,
+    bytes32[] calldata reasons,
+    uint256[] calldata releases
+  ) internal virtual returns (bool) {
+    require(
+      accounts.length == amounts.length &&
+        amounts.length == reasons.length &&
+        reasons.length == releases.length,
+      "KIP7Lockable: invalid length"
+    );
+
+    for (uint256 i = 0; i < accounts.length; i++) {
+      require(
+        _lock(accounts[i], amounts[i], reasons[i], releases[i]),
+        string(
+          abi.encodePacked(
+            "KIP7Lockable: unable to lock token on account ",
+            Strings.toHexString(uint160(accounts[i]), 20),
+            "with reasons ",
+            Strings.toHexString(uint160(reasons[i]))
+          )
+        )
+      );
+    }
+
+    return true;
+  }
+
+  /**
    * @dev Transfers and Locks a specified amount of tokens,
    *      for a specified reason and time
    * @param account adress to which tokens are to be transfered
@@ -107,6 +145,44 @@ abstract contract KIP7Lockable is KIP7 {
 
     _transfer(_msgSender(), account, amount);
     _lock(account, amount, reason, release);
+    return true;
+  }
+
+  /**
+   * @dev Multiple Transfers and Locks a specified amount of tokens,
+   *      for a specified reason and time
+   * @param accounts Each address to which tokens are to be transfered
+   * @param amounts Each number of tokens to be transfered and locked
+   * @param reasons Each the reason to lock tokens
+   * @param releases Each release time in seconds
+   */
+  function _batchTransferWithLock(
+    address[] calldata accounts,
+    uint256[] calldata amounts,
+    bytes32[] calldata reasons,
+    uint256[] calldata releases
+  ) internal virtual returns (bool) {
+    require(
+      accounts.length == amounts.length &&
+        amounts.length == reasons.length &&
+        reasons.length == releases.length,
+      "KIP7Lockable: invalid length"
+    );
+
+    for (uint256 i = 0; i < accounts.length; i++) {
+      require(
+        _transferWithLock(accounts[i], amounts[i], reasons[i], releases[i]),
+        string(
+          abi.encodePacked(
+            "KIP7Lockable: unable to lock token on account ",
+            Strings.toHexString(uint160(accounts[i]), 20),
+            "with reasons ",
+            Strings.toHexString(uint160(reasons[i]))
+          )
+        )
+      );
+    }
+
     return true;
   }
 
