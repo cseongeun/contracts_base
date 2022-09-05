@@ -1,18 +1,25 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
-import { IKIP13 } from "../../../common/utils/introspection/IKIP13.sol";
+import { IERC165 } from "../../../common/utils/introspection/IERC165.sol";
 
-interface IKIP37 is IKIP13 {
+/**
+ * @dev Required interface of an BEP1155 compliant contract, as defined in the
+ * https://eips.ethereum.org/EIPS/eip-1155[EIP].
+ *
+ * _Available since v3.1._
+ */
+interface IBEP1155 is IERC165 {
   /**
-   * @dev Emitted when `amount` tokens of token type `id` are transferred from `from` to `to` by `operator`.
+   * @dev Emitted when `value` tokens of token type `id` are transferred from `from` to `to` by `operator`.
    */
   event TransferSingle(
     address indexed operator,
     address indexed from,
     address indexed to,
     uint256 id,
-    uint256 amount
+    uint256 value
   );
 
   /**
@@ -24,7 +31,7 @@ interface IKIP37 is IKIP13 {
     address indexed from,
     address indexed to,
     uint256[] ids,
-    uint256[] amounts
+    uint256[] values
   );
 
   /**
@@ -32,7 +39,7 @@ interface IKIP37 is IKIP13 {
    * `approved`.
    */
   event ApprovalForAll(
-    address indexed owner,
+    address indexed account,
     address indexed operator,
     bool approved
   );
@@ -41,28 +48,31 @@ interface IKIP37 is IKIP13 {
    * @dev Emitted when the URI for token type `id` changes to `value`, if it is a non-programmatic URI.
    *
    * If an {URI} event was emitted for `id`, the standard
-   * http://kips.klaytn.com/KIPs/kip-37#metadata-extension[guarantees] that `value` will equal the value
-   * returned by {IKIP37Metadata-uri}.
+   * https://eips.ethereum.org/EIPS/eip-1155#metadata-extensions[guarantees] that `value` will equal the value
+   * returned by {IBEP1155MetadataURI-uri}.
    */
   event URI(string value, uint256 indexed id);
 
   /**
-   * @dev Returns the amount of tokens of token type `id` owned by `owner`.
+   * @dev Returns the amount of tokens of token type `id` owned by `account`.
    *
    * Requirements:
    *
-   * - `owner` cannot be the zero address.
+   * - `account` cannot be the zero address.
    */
-  function balanceOf(address owner, uint256 id) external view returns (uint256);
+  function balanceOf(address account, uint256 id)
+    external
+    view
+    returns (uint256);
 
   /**
-   * @dev xref:ROOT:kip37.adoc#batch-operations[Batched] version of {balanceOf}.
+   * @dev xref:ROOT:BEP1155.adoc#batch-operations[Batched] version of {balanceOf}.
    *
    * Requirements:
    *
-   * - `owners` and `ids` must have the same length.
+   * - `accounts` and `ids` must have the same length.
    */
-  function balanceOfBatch(address[] calldata owners, uint256[] calldata ids)
+  function balanceOfBatch(address[] calldata accounts, uint256[] calldata ids)
     external
     view
     returns (uint256[] memory);
@@ -79,11 +89,11 @@ interface IKIP37 is IKIP13 {
   function setApprovalForAll(address operator, bool approved) external;
 
   /**
-   * @dev Returns true if `operator` is approved to transfer ``owner``'s tokens.
+   * @dev Returns true if `operator` is approved to transfer ``account``'s tokens.
    *
    * See {setApprovalForAll}.
    */
-  function isApprovedForAll(address owner, address operator)
+  function isApprovedForAll(address account, address operator)
     external
     view
     returns (bool);
@@ -96,10 +106,10 @@ interface IKIP37 is IKIP13 {
    * Requirements:
    *
    * - `to` cannot be the zero address.
-   * - If the caller is not `from`, it must be have been approved to spend ``from``'s tokens via {setApprovalForAll}.
+   * - If the caller is not `from`, it must have been approved to spend ``from``'s tokens via {setApprovalForAll}.
    * - `from` must have a balance of tokens of type `id` of at least `amount`.
-   * - If `to` refers to a smart contract, it must implement {IKIP37Receiver-onKIP37Received} and return the
-   * acceptance magic amount.
+   * - If `to` refers to a smart contract, it must implement {IBEP1155Receiver-onBEP1155Received} and return the
+   * acceptance magic value.
    */
   function safeTransferFrom(
     address from,
@@ -110,15 +120,15 @@ interface IKIP37 is IKIP13 {
   ) external;
 
   /**
-   * @dev xref:ROOT:kip37.adoc#batch-operations[Batched] version of {safeTransferFrom}.
+   * @dev xref:ROOT:BEP1155.adoc#batch-operations[Batched] version of {safeTransferFrom}.
    *
    * Emits a {TransferBatch} event.
    *
    * Requirements:
    *
    * - `ids` and `amounts` must have the same length.
-   * - If `to` refers to a smart contract, it must implement {IKIP37Receiver-onKIP37BatchReceived} and return the
-   * acceptance magic amount.
+   * - If `to` refers to a smart contract, it must implement {IBEP1155Receiver-onBEP1155BatchReceived} and return the
+   * acceptance magic value.
    */
   function safeBatchTransferFrom(
     address from,

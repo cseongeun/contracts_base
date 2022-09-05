@@ -1,10 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { KIP7 } from "../KIP7.sol";
+import { BEP20 } from "../BEP20.sol";
 import { Strings } from "../../../common/utils/Strings.sol";
 
-abstract contract KIP7Lockable is KIP7 {
+abstract contract BEP20Lockable is BEP20 {
   /**
    * @dev Reasons why a user"s tokens have been locked
    */
@@ -62,14 +62,14 @@ abstract contract KIP7Lockable is KIP7 {
     // increaseLockAmount should be used to make any changes
     require(
       account != address(0),
-      "KIP7Lockable: lock account the zero address"
+      "BEP20Lockable: lock account the zero address"
     );
     require(
       tokensLocked(account, reason) == 0,
-      "KIP7Lockable: Tokens already locked"
+      "BEP20Lockable: Tokens already locked"
     );
-    require(amount != 0, "KIP7Lockable: Amount can not be zero");
-    require(balanceOf(account) >= amount, "KIP7Lockable: Not enough amount");
+    require(amount != 0, "BEP20Lockable: Amount can not be zero");
+    require(balanceOf(account) >= amount, "BEP20Lockable: Not enough amount");
 
     if (locked[account][reason].amount == 0) lockReason[account].push(reason);
 
@@ -99,7 +99,7 @@ abstract contract KIP7Lockable is KIP7 {
       accounts.length == amounts.length &&
         amounts.length == reasons.length &&
         reasons.length == releases.length,
-      "KIP7Lockable: invalid length"
+      "BEP20Lockable: invalid length"
     );
 
     for (uint256 i = 0; i < accounts.length; i++) {
@@ -107,7 +107,7 @@ abstract contract KIP7Lockable is KIP7 {
         _lock(accounts[i], amounts[i], reasons[i], releases[i]),
         string(
           abi.encodePacked(
-            "KIP7Lockable: unable to lock token on account ",
+            "BEP20Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
             "with reasons ",
             string(abi.encodePacked(reasons[i]))
@@ -135,14 +135,17 @@ abstract contract KIP7Lockable is KIP7 {
   ) internal virtual returns (bool) {
     require(
       account != address(0),
-      "KIP7Lockable: lock account the zero address"
+      "BEP20Lockable: lock account the zero address"
     );
     require(
       tokensLocked(account, reason) == 0,
-      "KIP7Lockable: Tokens already locked"
+      "BEP20Lockable: Tokens already locked"
     );
-    require(amount != 0, "KIP7Lockable: Amount can not be zero");
-    require(balanceOf(msg.sender) >= amount, "KIP7Lockable: Not enough amount");
+    require(amount != 0, "BEP20Lockable: Amount can not be zero");
+    require(
+      balanceOf(msg.sender) >= amount,
+      "BEP20Lockable: Not enough amount"
+    );
 
     _transfer(_msgSender(), account, amount);
     _lock(account, amount, reason, release);
@@ -167,7 +170,7 @@ abstract contract KIP7Lockable is KIP7 {
       accounts.length == amounts.length &&
         amounts.length == reasons.length &&
         reasons.length == releases.length,
-      "KIP7Lockable: invalid length"
+      "BEP20Lockable: invalid length"
     );
 
     for (uint256 i = 0; i < accounts.length; i++) {
@@ -175,7 +178,7 @@ abstract contract KIP7Lockable is KIP7 {
         _transferWithLock(accounts[i], amounts[i], reasons[i], releases[i]),
         string(
           abi.encodePacked(
-            "KIP7Lockable: unable to lock token on account ",
+            "BEP20Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
             "with reasons ",
             string(abi.encodePacked(reasons[i]))
@@ -260,7 +263,7 @@ abstract contract KIP7Lockable is KIP7 {
   ) internal virtual returns (bool) {
     require(
       tokensLocked(account, reason) > 0,
-      "KIP7Lockable: No tokens locked"
+      "BEP20Lockable: No tokens locked"
     );
 
     locked[account][reason].release = locked[account][reason].release + time;
@@ -287,10 +290,10 @@ abstract contract KIP7Lockable is KIP7 {
   ) internal virtual returns (bool) {
     require(
       tokensLocked(account, reason) > 0,
-      "KIP7Lockable: No tokens locked"
+      "BEP20Lockable: No tokens locked"
     );
-    require(amount != 0, "KIP7Lockable: Amount can not be zero");
-    require(balanceOf(account) >= amount, "KIP7Lockable: Not enough amount");
+    require(amount != 0, "BEP20Lockable: Amount can not be zero");
+    require(balanceOf(account) >= amount, "BEP20Lockable: Not enough amount");
 
     _transfer(account, address(this), amount);
 
@@ -363,7 +366,7 @@ abstract contract KIP7Lockable is KIP7 {
   }
 
   /**
-   * @dev See {ERC20-_beforeTokenTransfer}.
+   * @dev See {BEP20-_beforeTokenTransfer}.
    *
    */
   function _beforeTokenTransfer(

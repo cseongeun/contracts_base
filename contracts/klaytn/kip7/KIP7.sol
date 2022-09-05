@@ -4,8 +4,8 @@ pragma solidity ^0.8.0;
 import { Context } from "../../common/utils/Context.sol";
 import { KIP13 } from "../../common/utils/introspection/KIP13.sol";
 import { IKIP7 } from "./interfaces/IKIP7.sol";
-import { IKIP7Metadata } from "./interface/IKIP7Metadata.sol";
-import { Address } from "../../../common/utils/Address.sol";
+import { IKIP7Metadata } from "./interfaces/IKIP7Metadata.sol";
+import { Address } from "../../common/utils/Address.sol";
 import { IKIP7Receiver } from "./interfaces/IKIP7Receiver.sol";
 
 /**

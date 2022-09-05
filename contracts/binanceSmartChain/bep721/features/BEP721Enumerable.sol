@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import { KIP17 } from "../KIP17.sol";
-import { IKIP17Enumerable } from "../interfaces/IKIP17Enumerable.sol";
-import { IKIP13 } from "../../../common/utils/introspection/IKIP13.sol";
+import { BEP721 } from "../BEP721.sol";
+import { IBEP721Enumerable } from "../interfaces/IBEP721Enumerable.sol";
+import { IERC165 } from "../../../common/utils/introspection/IERC165.sol";
 
 /**
- * @dev This implements an optional extension of {KIP17} defined in the EIP that adds
+ * @dev This implements an optional extension of {BEP721} defined in the EIP that adds
  * enumerability of all the token ids in the contract as well as all token ids owned by each
  * account.
  */
-abstract contract KIP17Enumerable is KIP17, IKIP17Enumerable {
+abstract contract BEP721Enumerable is BEP721, IBEP721Enumerable {
   // Mapping from owner to list of owned token IDs
   mapping(address => mapping(uint256 => uint256)) private _ownedTokens;
 
@@ -24,22 +24,22 @@ abstract contract KIP17Enumerable is KIP17, IKIP17Enumerable {
   mapping(uint256 => uint256) private _allTokensIndex;
 
   /**
-   * @dev See {IERC165-supportsInterface}.
+   * @dev See {IBEP165-supportsInterface}.
    */
   function supportsInterface(bytes4 interfaceId)
     public
     view
     virtual
-    override(IKIP13, KIP17)
+    override(IERC165, BEP721)
     returns (bool)
   {
     return
-      interfaceId == type(IKIP17Enumerable).interfaceId ||
+      interfaceId == type(IBEP721Enumerable).interfaceId ||
       super.supportsInterface(interfaceId);
   }
 
   /**
-   * @dev See {IKIP17Enumerable-tokenOfOwnerByIndex}.
+   * @dev See {IBEP721Enumerable-tokenOfOwnerByIndex}.
    */
   function tokenOfOwnerByIndex(address owner, uint256 index)
     public
@@ -49,21 +49,21 @@ abstract contract KIP17Enumerable is KIP17, IKIP17Enumerable {
     returns (uint256)
   {
     require(
-      index < KIP17.balanceOf(owner),
-      "KIP17Enumerable: owner index out of bounds"
+      index < BEP721.balanceOf(owner),
+      "BEP721Enumerable: owner index out of bounds"
     );
     return _ownedTokens[owner][index];
   }
 
   /**
-   * @dev See {IKIP17Enumerable-totalSupply}.
+   * @dev See {IBEP721Enumerable-totalSupply}.
    */
   function totalSupply() public view virtual override returns (uint256) {
     return _allTokens.length;
   }
 
   /**
-   * @dev See {IKIP17Enumerable-tokenByIndex}.
+   * @dev See {IBEP721Enumerable-tokenByIndex}.
    */
   function tokenByIndex(uint256 index)
     public
@@ -73,8 +73,8 @@ abstract contract KIP17Enumerable is KIP17, IKIP17Enumerable {
     returns (uint256)
   {
     require(
-      index < KIP17Enumerable.totalSupply(),
-      "KIP17Enumerable: global index out of bounds"
+      index < BEP721Enumerable.totalSupply(),
+      "BEP721Enumerable: global index out of bounds"
     );
     return _allTokens[index];
   }
@@ -119,7 +119,7 @@ abstract contract KIP17Enumerable is KIP17, IKIP17Enumerable {
    * @param tokenId uint256 ID of the token to be added to the tokens list of the given address
    */
   function _addTokenToOwnerEnumeration(address to, uint256 tokenId) private {
-    uint256 length = KIP17.balanceOf(to);
+    uint256 length = BEP721.balanceOf(to);
     _ownedTokens[to][length] = tokenId;
     _ownedTokensIndex[tokenId] = length;
   }
@@ -147,7 +147,7 @@ abstract contract KIP17Enumerable is KIP17, IKIP17Enumerable {
     // To prevent a gap in from's tokens array, we store the last token in the index of the token to delete, and
     // then delete the last slot (swap and pop).
 
-    uint256 lastTokenIndex = KIP17.balanceOf(from) - 1;
+    uint256 lastTokenIndex = BEP721.balanceOf(from) - 1;
     uint256 tokenIndex = _ownedTokensIndex[tokenId];
 
     // When the token to delete is the last token, the swap operation is unnecessary
