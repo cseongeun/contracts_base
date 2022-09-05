@@ -1,4 +1,28 @@
 // SPDX-License-Identifier: MIT
+
 pragma solidity ^0.8.0;
 
-import { ERC721Burnable } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
+import { ERC721 } from "../ERC721.sol";
+import { Context } from "../../../common/utils/Context.sol";
+
+/**
+ * @title ERC721 Burnable Token
+ * @dev ERC721 Token that can be burned (destroyed).
+ */
+abstract contract ERC721Burnable is Context, ERC721 {
+  /**
+   * @dev Burns `tokenId`. See {ERC721-_burn}.
+   *
+   * Requirements:
+   *
+   * - The caller must own `tokenId` or be an approved operator.
+   */
+  function burn(uint256 tokenId) public virtual {
+    //solhint-disable-next-line max-line-length
+    require(
+      _isApprovedOrOwner(_msgSender(), tokenId),
+      "ERC721: caller is not token owner nor approved"
+    );
+    _burn(tokenId);
+  }
+}
