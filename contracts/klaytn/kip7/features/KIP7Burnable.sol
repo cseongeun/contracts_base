@@ -3,24 +3,8 @@ pragma solidity ^0.8.0;
 
 import { Context } from "../../../common/utils/Context.sol";
 import { KIP7 } from "../KIP7.sol";
-import { IKIP7Burnable } from "../interfaces/IKIP7Burnable.sol";
 
-abstract contract KIP7Burnable is Context, KIP7, IKIP7Burnable {
-  /**
-   * @dev See {IKIP13-supportsInterface}.
-   */
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override
-    returns (bool)
-  {
-    return
-      interfaceId == type(IKIP7Burnable).interfaceId ||
-      KIP7.supportsInterface(interfaceId);
-  }
-
+abstract contract KIP7Burnable is Context, KIP7 {
   /**
    * @dev Destroys `amount` tokens from the caller.
    *
