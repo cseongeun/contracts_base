@@ -5,6 +5,7 @@ import { Context } from "../../common/utils/Context.sol";
 import { ERC165 } from "../../common/utils/introspection/ERC165.sol";
 import { IBEP20 } from "./interfaces/IBEP20.sol";
 import { IBEP20Metadata } from "./interfaces/IBEP20Metadata.sol";
+import { BEP20Feature } from "./BEP20Feature.sol";
 
 /**
  * @dev Implementation of the {IBEP20} interface.
@@ -31,7 +32,7 @@ import { IBEP20Metadata } from "./interfaces/IBEP20Metadata.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {IBEP20-approve}.
  */
-contract BEP20 is Context, IBEP20, IBEP20Metadata, ERC165 {
+contract BEP20 is Context, IBEP20, IBEP20Metadata, ERC165, BEP20Feature {
   mapping(address => uint256) private _balances;
 
   mapping(address => mapping(address => uint256)) private _allowances;
