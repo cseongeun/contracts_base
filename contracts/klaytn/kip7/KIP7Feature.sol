@@ -7,7 +7,7 @@ abstract contract KIP7Feature {
     PRE_MINT,
     BURNABLE,
     FREEZABLE,
-    PASUABLE,
+    PAUSABLE,
     MINTABLE,
     LOCKABLE,
     BATCH_TRANSFERABLE

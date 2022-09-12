@@ -7,7 +7,7 @@ abstract contract ERC20Feature {
     PRE_MINT,
     BURNABLE,
     FREEZABLE,
-    PASUABLE,
+    PAUSABLE,
     MINTABLE,
     LOCKABLE,
     BATCH_TRANSFERABLE
