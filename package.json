@@ -9,7 +9,7 @@
     "type": "git",
     "url": "https://github.com/cseongeun/standard-contracts"
   },
-  "version": "0.0.16",
+  "version": "0.0.17",
   "description": "",
   "scripts": {
     "compile": "hardhat compile",
