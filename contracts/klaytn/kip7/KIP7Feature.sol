@@ -22,7 +22,7 @@ abstract contract KIP7Feature {
   mapping(Features => bool) public features;
   Access public access;
 
-  function setFeatures(Features[] memory _features) internal returns (bool) {
+  function _setFeatures(Features[] memory _features) internal returns (bool) {
     for (uint256 i = 0; i < _features.length; i++) {
       features[_features[i]] = true;
     }
