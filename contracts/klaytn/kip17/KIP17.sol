@@ -10,14 +10,13 @@ import { Strings } from "../../common/utils/Strings.sol";
 import { Context } from "../../common/utils/Context.sol";
 import { KIP13 } from "../../common/utils/introspection/KIP13.sol";
 import { IKIP13 } from "../../common/utils/introspection/IKIP13.sol";
-import { KIP17Feature } from "./KIP17Feature.sol";
 
 /**
  * @dev Implementation of https://kips.klaytn.com/KIPs/kip-17 Non-Fungible Token Standard, including
  * the Metadata extension, but not including the Enumerable extension, which is available separately as
  * {KIP17Enumerable}.
  */
-contract KIP17 is KIP13, Context, IKIP17, IKIP17Metadata, KIP17Feature {
+contract KIP17 is KIP13, Context, IKIP17, IKIP17Metadata {
   using Address for address;
   using Strings for uint256;
 

@@ -9,9 +9,8 @@ import { Address } from "../../common/utils/Address.sol";
 import { Context } from "../../common/utils/Context.sol";
 import { KIP13 } from "../../common/utils/introspection/KIP13.sol";
 import { IKIP13 } from "../../common/utils/introspection/IKIP13.sol";
-import { KIP37Feature } from "./KIP37Feature.sol";
 
-contract KIP37 is KIP13, IKIP37, IKIP37MetadataURI, Context, KIP37Feature {
+contract KIP37 is KIP13, IKIP37, IKIP37MetadataURI, Context {
   using Address for address;
 
   // Mapping from token ID to account balances

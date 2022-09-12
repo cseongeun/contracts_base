@@ -8,7 +8,6 @@ import { Address } from "../../common/utils/Address.sol";
 import { Context } from "../../common/utils/Context.sol";
 import { ERC165 } from "../../common/utils/introspection/ERC165.sol";
 import { IERC165 } from "../../common/utils/introspection/IERC165.sol";
-import { ERC1155Feature } from "./ERC1155Feature.sol";
 
 /**
  * @dev Implementation of the basic standard multi-token.
@@ -17,13 +16,7 @@ import { ERC1155Feature } from "./ERC1155Feature.sol";
  *
  * _Available since v3.1._
  */
-contract ERC1155 is
-  Context,
-  ERC165,
-  IERC1155,
-  IERC1155MetadataURI,
-  ERC1155Feature
-{
+contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
   using Address for address;
 
   // Mapping from token ID to account balances

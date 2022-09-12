@@ -7,7 +7,6 @@ import { IKIP7 } from "./interfaces/IKIP7.sol";
 import { IKIP7Metadata } from "./interfaces/IKIP7Metadata.sol";
 import { Address } from "../../common/utils/Address.sol";
 import { IKIP7Receiver } from "./interfaces/IKIP7Receiver.sol";
-import { KIP7Feature } from "./KIP7Feature.sol";
 
 /**
  * @dev Implementation of the {IKIP7} interface.
@@ -32,7 +31,7 @@ import { KIP7Feature } from "./KIP7Feature.sol";
  *
  * See http://kips.klaytn.com/KIPs/kip-7-fungible_token
  */
-contract KIP7 is KIP13, Context, IKIP7, IKIP7Metadata, KIP7Feature {
+contract KIP7 is KIP13, Context, IKIP7, IKIP7Metadata {
   using Address for address;
 
   mapping(address => uint256) private _balances;
