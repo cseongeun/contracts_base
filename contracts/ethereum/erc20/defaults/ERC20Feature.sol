@@ -14,7 +14,7 @@ abstract contract ERC20Feature {
 
   enum Access {
     NONE,
-    OWNERABLE,
+    OWNABLE,
     ROLES
   }
 

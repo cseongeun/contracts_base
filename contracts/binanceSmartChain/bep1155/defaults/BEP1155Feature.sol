@@ -13,7 +13,7 @@ abstract contract BEP1155Feature {
 
   enum Access {
     NONE,
-    OWNERABLE,
+    OWNABLE,
     ROLES
   }
 

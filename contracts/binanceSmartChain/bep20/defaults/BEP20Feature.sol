@@ -14,7 +14,7 @@ abstract contract BEP20Feature {
 
   enum Access {
     NONE,
-    OWNERABLE,
+    OWNABLE,
     ROLES
   }
 

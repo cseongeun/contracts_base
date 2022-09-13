@@ -13,7 +13,7 @@ abstract contract ERC1155Feature {
 
   enum Access {
     NONE,
-    OWNERABLE,
+    OWNABLE,
     ROLES
   }
 

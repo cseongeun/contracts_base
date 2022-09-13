@@ -13,7 +13,7 @@ abstract contract KIP17Feature {
 
   enum Access {
     NONE,
-    OWNERABLE,
+    OWNABLE,
     ROLES
   }
 

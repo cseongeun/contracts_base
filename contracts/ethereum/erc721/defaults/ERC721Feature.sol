@@ -13,7 +13,7 @@ abstract contract ERC721Feature {
 
   enum Access {
     NONE,
-    OWNERABLE,
+    OWNABLE,
     ROLES
   }
 
