@@ -9,13 +9,14 @@ import { Context } from "../../common/utils/Context.sol";
 import { Strings } from "../../common/utils/Strings.sol";
 import { ERC165 } from "../../common/utils/introspection/ERC165.sol";
 import { IERC165 } from "../../common/utils/introspection/IERC165.sol";
+import { ERC721Feature } from "./defaults/ERC721Feature.sol";
 
 /**
  * @dev Implementation of https://eips.ethereum.org/EIPS/eip-721[ERC721] Non-Fungible Token Standard, including
  * the Metadata extension, but not including the Enumerable extension, which is available separately as
  * {ERC721Enumerable}.
  */
-contract ERC721 is Context, ERC165, IERC721, IERC721Metadata {
+contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
   using Address for address;
   using Strings for uint256;
 
