@@ -5,6 +5,7 @@ import { Context } from "../../common/utils/Context.sol";
 import { ERC165 } from "../../common/utils/introspection/ERC165.sol";
 import { IERC20 } from "./interfaces/IERC20.sol";
 import { IERC20Metadata } from "./interfaces/IERC20Metadata.sol";
+import { ERC20Feature } from "./defaults/ERC20Feature.sol";
 
 /**
  * @dev Implementation of the {IERC20} interface.
@@ -31,7 +32,7 @@ import { IERC20Metadata } from "./interfaces/IERC20Metadata.sol";
  * functions have been added to mitigate the well-known issues around setting
  * allowances. See {IERC20-approve}.
  */
-contract ERC20 is Context, IERC20, IERC20Metadata, ERC165 {
+contract ERC20 is Context, IERC20, IERC20Metadata, ERC165, ERC20Feature {
   mapping(address => uint256) private _balances;
 
   mapping(address => mapping(address => uint256)) private _allowances;
