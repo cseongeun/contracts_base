@@ -4,9 +4,10 @@ pragma solidity ^0.8.0;
 import { ERC20 } from "../ERC20.sol";
 import { IERC20SafeTransfer } from "../interfaces/IERC20SafeTransfer.sol";
 import { Address } from "../../../common/utils/Address.sol";
+import { IERC20Receiver } from "../interfaces/IERC20Receiver.sol";
 import { IKIP7Receiver } from "../interfaces/IKIP7Receiver.sol";
 
-abstract contract KIP7SafeTransferable is ERC20, IERC20SafeTransfer {
+abstract contract ERC20SafeTransfer is ERC20, IERC20SafeTransfer {
   using Address for address;
 
   function supportsInterface(bytes4 interfaceId)
@@ -28,8 +29,9 @@ abstract contract KIP7SafeTransferable is ERC20, IERC20SafeTransfer {
   ) internal virtual {
     _transfer(_msgSender(), recipient, amount);
     require(
-      _checkOnKIP7Received(_msgSender(), recipient, amount, _data),
-      "KIP7SafeTransfer: transfer to non IKIP7Receiver implementer"
+      _checkOnERC20Received(_msgSender(), recipient, amount, _data) ||
+        _checkOnKIP7Received(_msgSender(), recipient, amount, _data),
+      "ERC20SafeTransfer: transfer to non IERC20Receiver/IKIP7Receiver implementer"
     );
   }
 
@@ -53,8 +55,9 @@ abstract contract KIP7SafeTransferable is ERC20, IERC20SafeTransfer {
   ) internal virtual {
     transferFrom(sender, recipient, amount);
     require(
-      _checkOnKIP7Received(sender, recipient, amount, _data),
-      "KIP7SafeTransfer: transfer to non IKIP7Receiver implementer"
+      _checkOnERC20Received(sender, recipient, amount, _data) ||
+        _checkOnKIP7Received(sender, recipient, amount, _data),
+      "ERC20SafeTransfer: transfer to non IERC20Receiver/IKIP7Receiver implementer"
     );
   }
 
@@ -75,7 +78,7 @@ abstract contract KIP7SafeTransferable is ERC20, IERC20SafeTransfer {
     _safeTransferFrom(sender, recipient, amount, _data);
   }
 
-  function _checkOnKIP7Received(
+  function _checkOnERC20Received(
     address from,
     address to,
     uint256 amount,
@@ -83,12 +86,37 @@ abstract contract KIP7SafeTransferable is ERC20, IERC20SafeTransfer {
   ) private returns (bool) {
     if (to.isContract()) {
       try
-        IKIP7Receiver(to).onKIP7Received(_msgSender(), from, amount, _data)
+        IERC20Receiver(to).onERC20Received(_msgSender(), from, amount, _data)
+      returns (bytes4 retval) {
+        return retval == IERC20Receiver.onERC20Received.selector;
+      } catch (bytes memory reason) {
+        if (reason.length == 0) {
+          return false;
+        } else {
+          assembly {
+            revert(add(32, reason), mload(reason))
+          }
+        }
+      }
+    } else {
+      return true;
+    }
+  }
+
+  function _checkOnKIP7Received(
+    address from,
+    address to,
+    uint256 tokenId,
+    bytes memory _data
+  ) private returns (bool) {
+    if (to.isContract()) {
+      try
+        IKIP7Receiver(to).onKIP7Received(_msgSender(), from, tokenId, _data)
       returns (bytes4 retval) {
         return retval == IKIP7Receiver.onKIP7Received.selector;
       } catch (bytes memory reason) {
         if (reason.length == 0) {
-          revert("KIP7SafeTransfer: transfer to non IKIP7Receiver implementer");
+          return false;
         } else {
           assembly {
             revert(add(32, reason), mload(reason))
