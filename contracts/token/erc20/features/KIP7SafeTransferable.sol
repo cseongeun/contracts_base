@@ -6,7 +6,7 @@ import { IERC20SafeTransfer } from "../interfaces/IERC20SafeTransfer.sol";
 import { Address } from "../../../common/utils/Address.sol";
 import { IKIP7Receiver } from "../interfaces/IKIP7Receiver.sol";
 
-abstract contract KIP7SafeTransfer is ERC20, IERC20SafeTransfer {
+abstract contract KIP7SafeTransferable is ERC20, IERC20SafeTransfer {
   using Address for address;
 
   function supportsInterface(bytes4 interfaceId)

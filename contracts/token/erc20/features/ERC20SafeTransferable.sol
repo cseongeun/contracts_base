@@ -6,7 +6,7 @@ import { IERC20SafeTransfer } from "../interfaces/IERC20SafeTransfer.sol";
 import { Address } from "../../../common/utils/Address.sol";
 import { IERC20Receiver } from "../interfaces/IERC20Receiver.sol";
 
-abstract contract ERC20SafeTransfer is ERC20, IERC20SafeTransfer {
+abstract contract ERC20SafeTransferable is ERC20, IERC20SafeTransfer {
   using Address for address;
 
   function supportsInterface(bytes4 interfaceId)
