@@ -2,6 +2,8 @@
 pragma solidity ^0.8.0;
 
 abstract contract ERC20Feature {
+  string public v = 'ERC20v1'
+
   enum FeatureType {
     CAPPED,
     BURNABLE,
