@@ -2,11 +2,14 @@
 pragma solidity ^0.8.0;
 
 import { Context } from "../../common/utils/Context.sol";
+import { Address } from "../../common/utils/Address.sol";
 import { ERC165 } from "../../common/utils/introspection/ERC165.sol";
 import { IERC20 } from "./interfaces/IERC20.sol";
 import { IERC20Metadata } from "./interfaces/IERC20Metadata.sol";
+import { IERC20SafeTransfer } from "./interfaces/IERC20SafeTransfer.sol";
+import { IERC20Receiver } from "./interfaces/IERC20Receiver.sol";
+import { IKIP7Receiver } from "./interfaces/IKIP7Receiver.sol";
 import { ERC20Feature } from "./defaults/ERC20Feature.sol";
-import { ERC20SafeTransfer } from "./defaults/ERC20SafeTransfer.sol";
 
 /**
  * @dev Implementation of the {IERC20} interface.
@@ -37,10 +40,12 @@ contract ERC20 is
   Context,
   IERC20,
   IERC20Metadata,
+  IERC20SafeTransfer,
   ERC165,
-  ERC20Feature,
-  ERC20SafeTransfer
+  ERC20Feature
 {
+  using Address for address;
+
   mapping(address => uint256) private _balances;
 
   mapping(address => mapping(address => uint256)) private _allowances;
@@ -77,6 +82,7 @@ contract ERC20 is
     return
       interfaceId == type(IERC20).interfaceId ||
       interfaceId == type(IERC20Metadata).interfaceId ||
+      interfaceId == type(IERC20SafeTransfer).interfaceId ||
       ERC165.supportsInterface(interfaceId);
   }
 
@@ -395,6 +401,112 @@ contract ERC20 is
       unchecked {
         _approve(owner, spender, currentAllowance - amount);
       }
+    }
+  }
+
+  function _safeTransfer(
+    address recipient,
+    uint256 amount,
+    bytes memory _data
+  ) internal virtual {
+    _transfer(_msgSender(), recipient, amount);
+    require(
+      _checkOnERC20Received(_msgSender(), recipient, amount, _data) ||
+        _checkOnKIP7Received(_msgSender(), recipient, amount, _data),
+      "ERC20SafeTransfer: transfer to non IERC20Receiver/IKIP7Receiver implementer"
+    );
+  }
+
+  function safeTransfer(address recipient, uint256 amount) public virtual {
+    safeTransfer(recipient, amount, "");
+  }
+
+  function safeTransfer(
+    address recipient,
+    uint256 amount,
+    bytes memory _data
+  ) public virtual {
+    _safeTransfer(recipient, amount, _data);
+  }
+
+  function _safeTransferFrom(
+    address sender,
+    address recipient,
+    uint256 amount,
+    bytes memory _data
+  ) internal virtual {
+    transferFrom(sender, recipient, amount);
+    require(
+      _checkOnERC20Received(sender, recipient, amount, _data) ||
+        _checkOnKIP7Received(sender, recipient, amount, _data),
+      "ERC20SafeTransfer: transfer to non IERC20Receiver/IKIP7Receiver implementer"
+    );
+  }
+
+  function safeTransferFrom(
+    address sender,
+    address recipient,
+    uint256 amount
+  ) public virtual {
+    safeTransferFrom(sender, recipient, amount, "");
+  }
+
+  function safeTransferFrom(
+    address sender,
+    address recipient,
+    uint256 amount,
+    bytes memory _data
+  ) public virtual {
+    _safeTransferFrom(sender, recipient, amount, _data);
+  }
+
+  function _checkOnERC20Received(
+    address from,
+    address to,
+    uint256 amount,
+    bytes memory _data
+  ) private returns (bool) {
+    if (to.isContract()) {
+      try
+        IERC20Receiver(to).onERC20Received(_msgSender(), from, amount, _data)
+      returns (bytes4 retval) {
+        return retval == IERC20Receiver.onERC20Received.selector;
+      } catch (bytes memory reason) {
+        if (reason.length == 0) {
+          return false;
+        } else {
+          assembly {
+            revert(add(32, reason), mload(reason))
+          }
+        }
+      }
+    } else {
+      return true;
+    }
+  }
+
+  function _checkOnKIP7Received(
+    address from,
+    address to,
+    uint256 tokenId,
+    bytes memory _data
+  ) private returns (bool) {
+    if (to.isContract()) {
+      try
+        IKIP7Receiver(to).onKIP7Received(_msgSender(), from, tokenId, _data)
+      returns (bytes4 retval) {
+        return retval == IKIP7Receiver.onKIP7Received.selector;
+      } catch (bytes memory reason) {
+        if (reason.length == 0) {
+          return false;
+        } else {
+          assembly {
+            revert(add(32, reason), mload(reason))
+          }
+        }
+      }
+    } else {
+      return true;
     }
   }
 
