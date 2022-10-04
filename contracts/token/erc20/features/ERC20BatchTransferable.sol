@@ -3,27 +3,11 @@ pragma solidity ^0.8.0;
 
 import { ERC20 } from "../ERC20.sol";
 import { Strings } from "../../../common/utils/Strings.sol";
-import { IERC20BatchTransferable } from "../interfaces/IERC20BatchTransferable.sol";
 
 /**
  * @dev Extension of {ERC20} that adds batch transfer of tokens.
  */
-abstract contract ERC20BatchTransferable is ERC20, IERC20BatchTransferable {
-  /**
-   * @dev See {IERC165-supportsInterface}.
-   */
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(ERC20)
-    returns (bool)
-  {
-    return
-      interfaceId == type(IERC20BatchTransferable).interfaceId ||
-      super.supportsInterface(interfaceId);
-  }
-
+abstract contract ERC20BatchTransferable is ERC20 {
   /**
    * @dev Batch transfer of multiple tokens to multiple addresses
    *

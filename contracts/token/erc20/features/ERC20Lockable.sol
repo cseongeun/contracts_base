@@ -3,29 +3,28 @@ pragma solidity ^0.8.0;
 
 import { ERC20 } from "../ERC20.sol";
 import { Strings } from "../../../common/utils/Strings.sol";
-import { IERC20Lockable } from "../interfaces/IERC20Lockable.sol";
 
-abstract contract ERC20Lockable is ERC20, IERC20Lockable {
+abstract contract ERC20Lockable is ERC20 {
   /**
    * @dev Reasons why a user"s tokens have been locked
    */
   mapping(address => bytes32[]) public lockReason;
+  
+  event Locked(
+    address indexed account,
+    bytes32 indexed reason,
+    uint256 amount,
+    uint256 release
+  );
 
   /**
-   * @dev See {IERC165-supportsInterface}.
+   * @dev Records data of all the tokens unlocked
    */
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(ERC20)
-    returns (bool)
-  {
-    return
-      interfaceId == type(IERC20Lockable).interfaceId ||
-      super.supportsInterface(interfaceId);
-  }
-
+  event Unlocked(
+    address indexed account,
+    bytes32 indexed reason,
+    uint256 amount
+  );
   /**
    * @dev locked token structure
    */
@@ -224,7 +223,7 @@ abstract contract ERC20Lockable is ERC20, IERC20Lockable {
     public
     view
     virtual
-    override(ERC20, IERC20Lockable)
+    override(ERC20)
     returns (uint256)
   {
     uint256 unlockableAmount = getUnlockableTokens(account);

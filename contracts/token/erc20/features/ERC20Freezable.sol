@@ -2,28 +2,22 @@
 pragma solidity ^0.8.0;
 
 import { ERC20 } from "../ERC20.sol";
-import { IERC20Freezable } from "../interfaces/IERC20Freezable.sol";
 
-abstract contract ERC20Freezable is ERC20, IERC20Freezable {
+abstract contract ERC20Freezable is ERC20 {
   /**
    * @dev user freezed
    * */
   mapping(address => bool) private freezed;
 
   /**
-   * @dev See {IERC165-supportsInterface}.
+   * @dev Emitted when user freezed
    */
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(ERC20)
-    returns (bool)
-  {
-    return
-      interfaceId == type(IERC20Freezable).interfaceId ||
-      super.supportsInterface(interfaceId);
-  }
+  event Freezed(address account);
+
+  /**
+   * @dev Emitted when user unfreezed
+   */
+  event UnFreezed(address account);
 
   /**
    * @dev  Returns true if account is freezed, and false otherwise.

@@ -3,24 +3,8 @@ pragma solidity ^0.8.0;
 
 import { ERC20 } from "../ERC20.sol";
 import { Context } from "../../../common/utils/Context.sol";
-import { IERC20Burnable } from "../interfaces/IERC20Burnable.sol";
 
-abstract contract ERC20Burnable is Context, ERC20, IERC20Burnable {
-  /**
-   * @dev See {IERC165-supportsInterface}.
-   */
-  function supportsInterface(bytes4 interfaceId)
-    public
-    view
-    virtual
-    override(ERC20)
-    returns (bool)
-  {
-    return
-      interfaceId == type(IERC20Burnable).interfaceId ||
-      super.supportsInterface(interfaceId);
-  }
-
+abstract contract ERC20Burnable is Context, ERC20 {
   /**
    * @dev Destroys `amount` tokens from the caller.
    *
