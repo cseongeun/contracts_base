@@ -78,5 +78,7 @@
     "web3": "^1.3.0",
     "yargs": "^17.0.0"
   },
-  "dependencies": {}
+  "dependencies": {
+    "@seongeun/standard-contract-wizard": "0.0.81"
+  }
 }

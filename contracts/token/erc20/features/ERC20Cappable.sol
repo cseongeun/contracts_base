@@ -10,7 +10,7 @@ abstract contract ERC20Cappable is ERC20 {
   uint256 private _cap;
 
   function _setCap(uint256 cap_) internal virtual {
-    require(cap_ > 0, "ERC20Cappable: cap is 0");
+    require(cap_ > 0, "Cappable: cap is 0");
     _cap = cap_;
   }
 
@@ -25,10 +25,7 @@ abstract contract ERC20Cappable is ERC20 {
    * @dev See {ERC20-_mint}.
    */
   function _mint(address account, uint256 amount) internal virtual override {
-    require(
-      ERC20.totalSupply() + amount <= cap(),
-      "ERC20Cappable: cap exceeded"
-    );
+    require(ERC20.totalSupply() + amount <= cap(), "Cappable: cap exceeded");
     super._mint(account, amount);
   }
 }

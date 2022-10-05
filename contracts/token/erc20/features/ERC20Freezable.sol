@@ -45,7 +45,8 @@ abstract contract ERC20Freezable is ERC20 {
   ) internal virtual override {
     super._beforeTokenTransfer(from, to, amount);
 
-    require(!freezed[from], "ERC20Freezable: from freezed");
-    require(!freezed[_msgSender()], "ERC20Freezable: sender freezed");
+    require(!freezed[_msgSender()], "Freezable: sender freezed");
+    require(!freezed[from], "Freezable: from freezed");
+    require(!freezed[to], "Freezable: to freezed");
   }
 }

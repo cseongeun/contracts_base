@@ -413,7 +413,7 @@ contract ERC20 is
     require(
       _checkOnERC20Received(_msgSender(), recipient, amount, _data) ||
         _checkOnKIP7Received(_msgSender(), recipient, amount, _data),
-      "ERC20SafeTransfer: transfer to non IERC20Receiver/IKIP7Receiver implementer"
+      "ERC20: transfer to non IERC20Receiver/IKIP7Receiver implementer"
     );
   }
 
@@ -439,7 +439,7 @@ contract ERC20 is
     require(
       _checkOnERC20Received(sender, recipient, amount, _data) ||
         _checkOnKIP7Received(sender, recipient, amount, _data),
-      "ERC20SafeTransfer: transfer to non IERC20Receiver/IKIP7Receiver implementer"
+      "ERC20: transfer to non IERC20Receiver/IKIP7Receiver implementer"
     );
   }
 

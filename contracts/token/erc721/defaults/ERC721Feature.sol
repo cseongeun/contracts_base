@@ -46,7 +46,7 @@ abstract contract ERC721Feature {
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
-       if (_featureType[i] == FeatureType.BASE_URI) {
+      if (_featureType[i] == FeatureType.BASE_URI) {
         _features.baseURI = true;
       } else if (_featureType[i] == FeatureType.ENUMERABLE) {
         _features.enumerable = true;
@@ -58,8 +58,6 @@ abstract contract ERC721Feature {
         _features.burnable = true;
       } else if (_featureType[i] == FeatureType.MINTABLE) {
         _features.mintable = true;
-      } else if (_featureType[i] == FeatureType.FREEZABLE) {
-        _features.freezable = true;
       } else if (_featureType[i] == FeatureType.FREEZABLE) {
         _features.freezable = true;
       }

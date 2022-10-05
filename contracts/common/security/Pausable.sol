@@ -25,7 +25,7 @@ abstract contract Pausable is Context {
   /**
    * @dev Emitted when the pause is lifted by `account`.
    */
-  event UnPaused(address account);
+  event Unpaused(address account);
 
   /**
    * @dev Initializes the contract in UnPaused state.
@@ -100,6 +100,6 @@ abstract contract Pausable is Context {
    */
   function _unpause() internal virtual whenPaused {
     _paused = false;
-    emit UnPaused(_msgSender());
+    emit Unpaused(_msgSender());
   }
 }

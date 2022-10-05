@@ -21,7 +21,7 @@ abstract contract ERC20BatchTransferable is ERC20 {
   ) public virtual returns (bool) {
     require(
       accounts.length == amounts.length,
-      "ERC20BatchTransferable: invalid length"
+      "BatchTransferable: invalid length"
     );
 
     for (uint256 i = 0; i < accounts.length; i++) {
@@ -29,7 +29,7 @@ abstract contract ERC20BatchTransferable is ERC20 {
         transfer(accounts[i], amounts[i]),
         string(
           abi.encodePacked(
-            "ERC20BatchTransfable: can not transfer ",
+            "BatchTransfable: can not transfer ",
             uint256(amounts[i]),
             "tokens to ",
             Strings.toHexString(uint160(accounts[i]), 20)

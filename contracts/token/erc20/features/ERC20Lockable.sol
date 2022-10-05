@@ -9,7 +9,7 @@ abstract contract ERC20Lockable is ERC20 {
    * @dev Reasons why a user"s tokens have been locked
    */
   mapping(address => bytes32[]) public lockReason;
-  
+
   event Locked(
     address indexed account,
     bytes32 indexed reason,
@@ -56,16 +56,13 @@ abstract contract ERC20Lockable is ERC20 {
   ) internal virtual returns (bool) {
     // If tokens are already locked, then functions extendLock or
     // increaseLockAmount should be used to make any changes
-    require(
-      account != address(0),
-      "ERC20Lockable: lock account the zero address"
-    );
+    require(account != address(0), "Lockable: lock account the zero address");
     require(
       tokensLocked(account, reason) == 0,
-      "ERC20Lockable: Tokens already locked"
+      "Lockable: Tokens already locked"
     );
-    require(amount != 0, "ERC20Lockable: Amount can not be zero");
-    require(balanceOf(account) >= amount, "ERC20Lockable: Not enough amount");
+    require(amount != 0, "Lockable: Amount can not be zero");
+    require(balanceOf(account) >= amount, "Lockable: Not enough amount");
 
     if (locked[account][reason].amount == 0) lockReason[account].push(reason);
 
@@ -95,7 +92,7 @@ abstract contract ERC20Lockable is ERC20 {
       accounts.length == amounts.length &&
         amounts.length == reasons.length &&
         reasons.length == releases.length,
-      "ERC20Lockable: invalid length"
+      "Lockable: invalid length"
     );
 
     for (uint256 i = 0; i < accounts.length; i++) {
@@ -103,7 +100,7 @@ abstract contract ERC20Lockable is ERC20 {
         _lock(accounts[i], amounts[i], reasons[i], releases[i]),
         string(
           abi.encodePacked(
-            "ERC20Lockable: unable to lock token on account ",
+            "Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
             "with reasons ",
             string(abi.encodePacked(reasons[i]))
@@ -129,19 +126,13 @@ abstract contract ERC20Lockable is ERC20 {
     bytes32 reason,
     uint256 release
   ) internal virtual returns (bool) {
-    require(
-      account != address(0),
-      "ERC20Lockable: lock account the zero address"
-    );
+    require(account != address(0), "Lockable: lock account the zero address");
     require(
       tokensLocked(account, reason) == 0,
-      "ERC20Lockable: Tokens already locked"
+      "Lockable: Tokens already locked"
     );
-    require(amount != 0, "ERC20Lockable: Amount can not be zero");
-    require(
-      balanceOf(msg.sender) >= amount,
-      "ERC20Lockable: Not enough amount"
-    );
+    require(amount != 0, "Lockable: Amount can not be zero");
+    require(balanceOf(msg.sender) >= amount, "Lockable: Not enough amount");
 
     _transfer(_msgSender(), account, amount);
     _lock(account, amount, reason, release);
@@ -166,7 +157,7 @@ abstract contract ERC20Lockable is ERC20 {
       accounts.length == amounts.length &&
         amounts.length == reasons.length &&
         reasons.length == releases.length,
-      "ERC20Lockable: invalid length"
+      "Lockable: invalid length"
     );
 
     for (uint256 i = 0; i < accounts.length; i++) {
@@ -174,7 +165,7 @@ abstract contract ERC20Lockable is ERC20 {
         _transferWithLock(accounts[i], amounts[i], reasons[i], releases[i]),
         string(
           abi.encodePacked(
-            "ERC20Lockable: unable to lock token on account ",
+            "Lockable: unable to lock token on account ",
             Strings.toHexString(uint160(accounts[i]), 20),
             "with reasons ",
             string(abi.encodePacked(reasons[i]))
@@ -257,10 +248,7 @@ abstract contract ERC20Lockable is ERC20 {
     bytes32 reason,
     uint256 time
   ) internal virtual returns (bool) {
-    require(
-      tokensLocked(account, reason) > 0,
-      "ERC20Lockable: No tokens locked"
-    );
+    require(tokensLocked(account, reason) > 0, "Lockable: No tokens locked");
 
     locked[account][reason].release = locked[account][reason].release + time;
 
@@ -284,12 +272,9 @@ abstract contract ERC20Lockable is ERC20 {
     bytes32 reason,
     uint256 amount
   ) internal virtual returns (bool) {
-    require(
-      tokensLocked(account, reason) > 0,
-      "ERC20Lockable: No tokens locked"
-    );
-    require(amount != 0, "ERC20Lockable: Amount can not be zero");
-    require(balanceOf(account) >= amount, "ERC20Lockable: Not enough amount");
+    require(tokensLocked(account, reason) > 0, "Lockable: No tokens locked");
+    require(amount != 0, "Lockable: Amount can not be zero");
+    require(balanceOf(account) >= amount, "Lockable: Not enough amount");
 
     _transfer(account, address(this), amount);
 
