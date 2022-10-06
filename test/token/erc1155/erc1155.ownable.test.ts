@@ -4,14 +4,14 @@ import { BigNumber, Contract } from "ethers";
 import { time } from "../../../util/time";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
 import { formatStruct, randomBytes } from "../../../util/string";
-import { generateERC721Mocks } from "../../../util/generator";
+import { generateERC1155Mocks } from "../../../util/generator";
 
 const { AddressZero, Zero, One, Two } = ethers.constants;
 const Three: BigNumber = BigNumber.from(3);
 
 const { duration, increaseTo, latest } = time;
 
-describe("ERC721OwnableMock", function () {
+describe("ERC1155OwnableMock", function () {
   // Players
   let owner: SignerWithAddress;
   let user1: SignerWithAddress;
@@ -20,7 +20,7 @@ describe("ERC721OwnableMock", function () {
 
   // Token Init Property
   let token: Contract;
-  let tokenName: string = "ERC721OwnableMock";
+  let tokenName: string = "ERC1155OwnableMock";
   let tokenSymbol: string = "EOMK";
   let tokenDecimals: number = 18;
   let tokenInitalSupplyRaw: string = "1000";
@@ -33,16 +33,15 @@ describe("ERC721OwnableMock", function () {
   );
 
   before(async function () {
-    generateERC721Mocks({
+    generateERC1155Mocks({
       metadata: {
         name: tokenName,
-        symbol: tokenSymbol,
+        baseURI: "www.hexlant.com/",
       },
       features: {
         // burnable: true,
         // pausable: true,
         // freezable: true,
-        // batchTransferable: true,
       },
     });
 

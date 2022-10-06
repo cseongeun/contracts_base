@@ -6,8 +6,6 @@ abstract contract ERC1155Feature {
     PAUSABLE,
     FREEZABLE,
     BURNABLE,
-    MINTABLE,
-    SUPPLY_TRACKABLE,
     URI_STORAGABLE
   }
 
@@ -21,8 +19,6 @@ abstract contract ERC1155Feature {
     bool pausable;
     bool freezable;
     bool burnable;
-    bool mintable;
-    bool supplyTrackable;
     bool uriStoragable;
   }
 
@@ -37,8 +33,6 @@ abstract contract ERC1155Feature {
       pausable: false,
       freezable: false,
       burnable: false,
-      mintable: false,
-      supplyTrackable: false,
       uriStoragable: false
     });
 
@@ -49,10 +43,6 @@ abstract contract ERC1155Feature {
         _features.freezable = true;
       } else if (_featureType[i] == FeatureType.BURNABLE) {
         _features.burnable = true;
-      } else if (_featureType[i] == FeatureType.MINTABLE) {
-        _features.mintable = true;
-      } else if (_featureType[i] == FeatureType.SUPPLY_TRACKABLE) {
-        _features.supplyTrackable = true;
       } else if (_featureType[i] == FeatureType.URI_STORAGABLE) {
         _features.uriStoragable = true;
       }

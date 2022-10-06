@@ -1,4 +1,6 @@
 import {
+  erc1155,
+  ERC1155Options,
   erc20,
   ERC20Options,
   erc721,
@@ -30,6 +32,15 @@ export const generateERC721Mocks = (opts: ERC721Options) => {
 
   fs.writeFileSync(
     `contracts/mock/token/erc721/${opts.metadata.name}.sol`,
+    replacePath(print(opts))
+  );
+};
+
+export const generateERC1155Mocks = (opts: ERC1155Options) => {
+  const { print } = erc1155;
+
+  fs.writeFileSync(
+    `contracts/mock/token/erc1155/${opts.metadata.name}.sol`,
     replacePath(print(opts))
   );
 };
