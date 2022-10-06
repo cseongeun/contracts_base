@@ -4,6 +4,7 @@ pragma solidity ^0.8.0;
 import { IERC1155 } from "./interfaces/IERC1155.sol";
 import { IERC1155Receiver } from "./interfaces/IERC1155Receiver.sol";
 import { IKIP37Receiver } from "./interfaces/IKIP37Receiver.sol";
+import { IERC1155Metadata } from "./interfaces/IERC1155Metadata.sol";
 import { IERC1155MetadataURI } from "./interfaces/IERC1155MetadataURI.sol";
 import { Address } from "../../common/utils/Address.sol";
 import { Context } from "../../common/utils/Context.sol";
@@ -22,6 +23,7 @@ contract ERC1155 is
   Context,
   ERC165,
   IERC1155,
+  IERC1155Metadata,
   IERC1155MetadataURI,
   ERC1155Feature
 {
@@ -36,11 +38,35 @@ contract ERC1155 is
   // Used as the URI for all token types by relying on ID substitution, e.g. https://token-cdn-domain/{id}.json
   string private _uri;
 
+  string private _name;
+  string private _symbol;
+
   /**
    * @dev See {_setURI}.
    */
-  constructor(string memory uri_) {
+  constructor(
+    string memory name_,
+    string memory symbol_,
+    string memory uri_
+  ) {
+    _name = name_;
+    _symbol = symbol_;
     _setURI(uri_);
+  }
+
+  /**
+   * @dev Returns the name of the token.
+   */
+  function name() public view virtual override returns (string memory) {
+    return _name;
+  }
+
+  /**
+   * @dev Returns the symbol of the token, usually a shorter version of the
+   * name.
+   */
+  function symbol() public view virtual override returns (string memory) {
+    return _symbol;
   }
 
   /**
