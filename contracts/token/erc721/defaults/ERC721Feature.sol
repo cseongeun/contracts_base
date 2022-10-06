@@ -7,7 +7,6 @@ abstract contract ERC721Feature {
   enum FeatureType {
     PAUSABLE,
     BURNABLE,
-    MINTABLE,
     FREEZABLE,
     BATCH_TRRANSFERABLE
   }
@@ -21,7 +20,6 @@ abstract contract ERC721Feature {
   struct Features {
     bool pausable;
     bool burnable;
-    bool mintable;
     bool freezable;
     bool batchTransferable;
   }
@@ -36,7 +34,6 @@ abstract contract ERC721Feature {
     Features memory _features = Features({
       pausable: false,
       burnable: false,
-      mintable: false,
       freezable: false,
       batchTransferable: false
     });
@@ -46,8 +43,6 @@ abstract contract ERC721Feature {
         _features.pausable = true;
       } else if (_featureType[i] == FeatureType.BURNABLE) {
         _features.burnable = true;
-      } else if (_featureType[i] == FeatureType.MINTABLE) {
-        _features.mintable = true;
       } else if (_featureType[i] == FeatureType.FREEZABLE) {
         _features.freezable = true;
       } else if (_featureType[i] == FeatureType.BATCH_TRRANSFERABLE) {
