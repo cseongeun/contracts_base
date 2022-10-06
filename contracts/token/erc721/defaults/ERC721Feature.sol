@@ -2,14 +2,14 @@
 pragma solidity ^0.8.0;
 
 abstract contract ERC721Feature {
+  string public v = "ERC2721v1";
+
   enum FeatureType {
-    BASE_URI,
-    ENUMERABLE,
-    URI_STORAGE,
     PAUSABLE,
     BURNABLE,
     MINTABLE,
-    FREEZABLE
+    FREEZABLE,
+    BATCH_TRRANSFERABLE
   }
 
   enum Access {
@@ -19,13 +19,11 @@ abstract contract ERC721Feature {
   }
 
   struct Features {
-    bool baseURI;
-    bool enumerable;
-    bool uriStorage;
     bool pausable;
     bool burnable;
     bool mintable;
     bool freezable;
+    bool batchTransferable;
   }
 
   Features public features;
@@ -36,23 +34,15 @@ abstract contract ERC721Feature {
     returns (bool)
   {
     Features memory _features = Features({
-      baseURI: false,
-      enumerable: false,
-      uriStorage: false,
       pausable: false,
       burnable: false,
       mintable: false,
-      freezable: false
+      freezable: false,
+      batchTransferable: false
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
-      if (_featureType[i] == FeatureType.BASE_URI) {
-        _features.baseURI = true;
-      } else if (_featureType[i] == FeatureType.ENUMERABLE) {
-        _features.enumerable = true;
-      } else if (_featureType[i] == FeatureType.URI_STORAGE) {
-        _features.uriStorage = true;
-      } else if (_featureType[i] == FeatureType.PAUSABLE) {
+      if (_featureType[i] == FeatureType.PAUSABLE) {
         _features.pausable = true;
       } else if (_featureType[i] == FeatureType.BURNABLE) {
         _features.burnable = true;
@@ -60,6 +50,8 @@ abstract contract ERC721Feature {
         _features.mintable = true;
       } else if (_featureType[i] == FeatureType.FREEZABLE) {
         _features.freezable = true;
+      } else if (_featureType[i] == FeatureType.BATCH_TRRANSFERABLE) {
+        _features.batchTransferable = true;
       }
     }
 

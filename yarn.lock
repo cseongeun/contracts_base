@@ -1063,6 +1063,14 @@
     "@sentry/types" "5.30.0"
     tslib "^1.9.3"
 
+"@seongeun/standard-contract-wizard@^0.0.88":
+  version "0.0.88"
+  resolved "https://registry.yarnpkg.com/@seongeun/standard-contract-wizard/-/standard-contract-wizard-0.0.88.tgz#683cce7d595c437786d46f9811d45e05773a3a1c"
+  integrity sha512-xh0lfX+FQoR2afZCGTaf6+xvZOKeT2PA4EUiBInAzNy4Q2BfbEbj+xABPaskr/DR4223xFmmPu93xft8R7p6jQ==
+  dependencies:
+    array.prototype.flatmap "^1.2.4"
+    glob-promise "^5.0.0"
+
 "@sindresorhus/is@^0.14.0":
   version "0.14.0"
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-0.14.0.tgz#9fb3a3cf3132328151f353de4632e01e52102bea"
@@ -1315,7 +1323,7 @@
   dependencies:
     "@types/node" "*"
 
-"@types/glob@^7.1.1":
+"@types/glob@^7.1.1", "@types/glob@^7.2.0":
   version "7.2.0"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.2.0.tgz#bc1b5bf3aa92f25bd5dd39f35c57361bdce5b2eb"
   integrity sha512-ZUxbzKl0IfJILTS6t7ip5fQQM/J3TJYubDm3nMbgubNNYS62eXeUpoLUC8/7fJNiFYHTrGPQn7hspDUzIHX3UA==
@@ -1725,6 +1733,16 @@ array.prototype.flat@^1.2.5:
   version "1.3.0"
   resolved "https://registry.yarnpkg.com/array.prototype.flat/-/array.prototype.flat-1.3.0.tgz#0b0c1567bf57b38b56b4c97b8aa72ab45e4adc7b"
   integrity sha512-12IUEkHsAhA4DY5s0FPgNXIdc8VRSqD9Zp78a5au9abH/SOBrsp082JOWFNTjkMozh8mqcdiKuaLGhPeYztxSw==
+  dependencies:
+    call-bind "^1.0.2"
+    define-properties "^1.1.3"
+    es-abstract "^1.19.2"
+    es-shim-unscopables "^1.0.0"
+
+array.prototype.flatmap@^1.2.4:
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/array.prototype.flatmap/-/array.prototype.flatmap-1.3.0.tgz#a7e8ed4225f4788a70cd910abcf0791e76a5534f"
+  integrity sha512-PZC9/8TKAIxcWKdyeb77EzULHPrIX/tIZebLJUQOMR1OwYosT8yggdfWScfTBCDj5utONvOuPQQumYsU2ULbkg==
   dependencies:
     call-bind "^1.0.2"
     define-properties "^1.1.3"
@@ -4568,6 +4586,13 @@ glob-parent@^5.1.2, glob-parent@~5.1.0, glob-parent@~5.1.2:
   integrity sha512-AOIgSQCepiJYwP3ARnGx+5VnTu2HBYdzbGP45eLw1vr3zB3vZLeyed1sC9hnbcOc9/SrMyM5RPQrkGz4aS9Zow==
   dependencies:
     is-glob "^4.0.1"
+
+glob-promise@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/glob-promise/-/glob-promise-5.0.0.tgz#aee3317ee1c211866d0425e1ac2e9089ded09c28"
+  integrity sha512-YQ7+beqmmQ3yUzybHoxnj7XMImztIdusIFate36/aB1gEWugR1qZI9a2u1A5mt6gYRqYldipZ7NB9s1UEq3vzw==
+  dependencies:
+    "@types/glob" "^7.2.0"
 
 glob@7.1.3:
   version "7.1.3"

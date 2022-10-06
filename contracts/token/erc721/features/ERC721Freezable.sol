@@ -3,7 +3,7 @@ pragma solidity ^0.8.0;
 
 import { ERC721 } from "../ERC721.sol";
 
-abstract contract ERC20Freezable is ERC721 {
+abstract contract ERC721Freezable is ERC721 {
   /**
    * @dev user freezed
    * */
@@ -45,7 +45,8 @@ abstract contract ERC20Freezable is ERC721 {
   ) internal virtual override {
     super._beforeTokenTransfer(from, to, tokenId);
 
-    require(!freezed[from], "ERC20Freezable: from freezed");
-    require(!freezed[_msgSender()], "ERC20Freezable: sender freezed");
+    require(!freezed[_msgSender()], "Freezable: sender freezed");
+    require(!freezed[from], "Freezable: from freezed");
+    require(!freezed[to], "Freezable: to freezed");
   }
 }

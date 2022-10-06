@@ -50,7 +50,7 @@ abstract contract ERC721Enumerable is ERC721, IERC721Enumerable {
   {
     require(
       index < ERC721.balanceOf(owner),
-      "ERC721Enumerable: owner index out of bounds"
+      "Enumerable: owner index out of bounds"
     );
     return _ownedTokens[owner][index];
   }
@@ -74,7 +74,7 @@ abstract contract ERC721Enumerable is ERC721, IERC721Enumerable {
   {
     require(
       index < ERC721Enumerable.totalSupply(),
-      "ERC721Enumerable: global index out of bounds"
+      "Enumerable: global index out of bounds"
     );
     return _allTokens[index];
   }

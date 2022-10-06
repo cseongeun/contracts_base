@@ -48,7 +48,9 @@ abstract contract ERC1155Freezable is ERC1155 {
   ) internal virtual override {
     super._beforeTokenTransfer(operator, from, to, ids, amounts, data);
 
-    require(!freezed[from], "ERC1155Freezable: from freezed");
-    require(!freezed[_msgSender()], "ERC1155Freezable: sender freezed");
+    require(!freezed[_msgSender()], "Freezable: sender freezed");
+    require(!freezed[operator], "Freezable: operator freezed");
+    require(!freezed[from], "Freezable: from freezed");
+    require(!freezed[to], "Freezable: sender freezed");
   }
 }

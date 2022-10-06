@@ -1,4 +1,9 @@
-import { erc20, ERC20Options } from "@seongeun/standard-contract-wizard";
+import {
+  erc20,
+  ERC20Options,
+  erc721,
+  ERC721Options,
+} from "@seongeun/standard-contract-wizard";
 import * as fs from "fs";
 import { replaceAll } from "./replace";
 
@@ -16,6 +21,15 @@ export const generateERC20Mocks = (opts: ERC20Options) => {
 
   fs.writeFileSync(
     `contracts/mock/token/erc20/${opts.metadata.name}.sol`,
+    replacePath(print(opts))
+  );
+};
+
+export const generateERC721Mocks = (opts: ERC721Options) => {
+  const { print } = erc721;
+
+  fs.writeFileSync(
+    `contracts/mock/token/erc721/${opts.metadata.name}.sol`,
     replacePath(print(opts))
   );
 };

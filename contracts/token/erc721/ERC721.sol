@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import { IERC721 } from "./interfaces/IERC721.sol";
 import { IERC721Receiver } from "./interfaces/IERC721Receiver.sol";
+import { IKIP17Receiver } from "./interfaces/IKIP17Receiver.sol";
 import { IERC721Metadata } from "./interfaces/IERC721Metadata.sol";
 import { Address } from "../../common/utils/Address.sol";
 import { Context } from "../../common/utils/Context.sol";
@@ -194,7 +195,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
     address from,
     address to,
     uint256 tokenId
-  ) public virtual override {
+  ) public virtual override returns (bool) {
     //solhint-disable-next-line max-line-length
     require(
       _isApprovedOrOwner(_msgSender(), tokenId),
@@ -202,6 +203,8 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
     );
 
     _transfer(from, to, tokenId);
+
+    return true;
   }
 
   /**
@@ -211,8 +214,9 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
     address from,
     address to,
     uint256 tokenId
-  ) public virtual override {
+  ) public virtual override returns (bool) {
     safeTransferFrom(from, to, tokenId, "");
+    return true;
   }
 
   /**
@@ -223,12 +227,13 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
     address to,
     uint256 tokenId,
     bytes memory data
-  ) public virtual override {
+  ) public virtual override returns (bool) {
     require(
       _isApprovedOrOwner(_msgSender(), tokenId),
       "ERC721: caller is not token owner nor approved"
     );
     _safeTransfer(from, to, tokenId, data);
+    return true;
   }
 
   /**
@@ -256,10 +261,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
     bytes memory data
   ) internal virtual {
     _transfer(from, to, tokenId);
-    require(
-      _checkOnERC721Received(from, to, tokenId, data),
-      "ERC721: transfer to non ERC721Receiver implementer"
-    );
+    _doSafeTransferAcceptanceCheck(from, to, tokenId, data);
   }
 
   /**
@@ -317,10 +319,7 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
     bytes memory data
   ) internal virtual {
     _mint(to, tokenId);
-    require(
-      _checkOnERC721Received(address(0), to, tokenId, data),
-      "ERC721: transfer to non ERC721Receiver implementer"
-    );
+    _doSafeTransferAcceptanceCheck(address(0), to, tokenId, data);
   }
 
   /**
@@ -443,6 +442,19 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
     require(_exists(tokenId), "ERC721: invalid token ID");
   }
 
+  function _doSafeTransferAcceptanceCheck(
+    address from,
+    address to,
+    uint256 tokenId,
+    bytes memory data
+  ) private {
+    require(
+      _checkOnERC721Received(from, to, tokenId, data) ||
+        _checkOnKIP17Received(from, to, tokenId, data),
+      "ERC721: transfer to non IERC721Receiver/IKIP17Receiver implementer"
+    );
+  }
+
   /**
    * @dev Internal function to invoke {IERC721Receiver-onERC721Received} on a target address.
    * The call is not executed if the target address is not a contract.
@@ -469,6 +481,41 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
           revert("ERC721: transfer to non ERC721Receiver implementer");
         } else {
           /// @solidity memory-safe-assembly
+          assembly {
+            revert(add(32, reason), mload(reason))
+          }
+        }
+      }
+    } else {
+      return true;
+    }
+  }
+
+  /**
+   * @dev Internal function to invoke {IKIP17Receiver-onKIP17Received} on a target address.
+   * The call is not executed if the target address is not a contract.
+   *
+   * @param from address representing the previous owner of the given token ID
+   * @param to target address that will receive the tokens
+   * @param tokenId uint256 ID of the token to be transferred
+   * @param _data bytes optional data to send along with the call
+   * @return bool whether the call correctly returned the expected magic value
+   */
+  function _checkOnKIP17Received(
+    address from,
+    address to,
+    uint256 tokenId,
+    bytes memory _data
+  ) private returns (bool) {
+    if (to.isContract()) {
+      try
+        IKIP17Receiver(to).onKIP17Received(_msgSender(), from, tokenId, _data)
+      returns (bytes4 retval) {
+        return retval == IKIP17Receiver.onKIP17Received.selector;
+      } catch (bytes memory reason) {
+        if (reason.length == 0) {
+          return false;
+        } else {
           assembly {
             revert(add(32, reason), mload(reason))
           }

@@ -3,6 +3,7 @@ pragma solidity ^0.8.0;
 
 import { IERC1155 } from "./interfaces/IERC1155.sol";
 import { IERC1155Receiver } from "./interfaces/IERC1155Receiver.sol";
+import { IKIP37Receiver } from "./interfaces/IKIP37Receiver.sol";
 import { IERC1155MetadataURI } from "./interfaces/IERC1155MetadataURI.sol";
 import { Address } from "../../common/utils/Address.sol";
 import { Context } from "../../common/utils/Context.sol";
@@ -528,19 +529,11 @@ contract ERC1155 is
     uint256 amount,
     bytes memory data
   ) private {
-    if (to.isContract()) {
-      try
-        IERC1155Receiver(to).onERC1155Received(operator, from, id, amount, data)
-      returns (bytes4 response) {
-        if (response != IERC1155Receiver.onERC1155Received.selector) {
-          revert("ERC1155: ERC1155Receiver rejected tokens");
-        }
-      } catch Error(string memory reason) {
-        revert(reason);
-      } catch {
-        revert("ERC1155: transfer to non ERC1155Receiver implementer");
-      }
-    }
+    require(
+      _checkOnERC1155Received(operator, from, to, id, amount, data) ||
+        _checkOnKIP37Received(operator, from, to, id, amount, data),
+      "ERC1155: transfer to non IERC1155Receiver/IKIP37Receiver implementer"
+    );
   }
 
   function _doSafeBatchTransferAcceptanceCheck(
@@ -551,25 +544,11 @@ contract ERC1155 is
     uint256[] memory amounts,
     bytes memory data
   ) private {
-    if (to.isContract()) {
-      try
-        IERC1155Receiver(to).onERC1155BatchReceived(
-          operator,
-          from,
-          ids,
-          amounts,
-          data
-        )
-      returns (bytes4 response) {
-        if (response != IERC1155Receiver.onERC1155BatchReceived.selector) {
-          revert("ERC1155: ERC1155Receiver rejected tokens");
-        }
-      } catch Error(string memory reason) {
-        revert(reason);
-      } catch {
-        revert("ERC1155: transfer to non ERC1155Receiver implementer");
-      }
-    }
+    require(
+      _checkOnERC1155BatchReceived(operator, from, to, ids, amounts, data) ||
+        _checkOnKIP37BatchReceived(operator, from, to, ids, amounts, data),
+      "ERC1155: transfer to non IERC1155Receiver/IKIP37Receiver implementer"
+    );
   }
 
   function _asSingletonArray(uint256 element)
@@ -581,5 +560,125 @@ contract ERC1155 is
     array[0] = element;
 
     return array;
+  }
+
+  function _checkOnKIP37Received(
+    address operator,
+    address from,
+    address to,
+    uint256 id,
+    uint256 amount,
+    bytes memory data
+  ) private returns (bool) {
+    if (to.isContract()) {
+      try
+        IKIP37Receiver(to).onKIP37Received(operator, from, id, amount, data)
+      returns (bytes4 retval) {
+        return retval == IKIP37Receiver.onKIP37Received.selector;
+      } catch (bytes memory reason) {
+        if (reason.length == 0) {
+          return false;
+        } else {
+          assembly {
+            revert(add(32, reason), mload(reason))
+          }
+        }
+      }
+    } else {
+      return true;
+    }
+  }
+
+  function _checkOnKIP37BatchReceived(
+    address operator,
+    address from,
+    address to,
+    uint256[] memory ids,
+    uint256[] memory amounts,
+    bytes memory data
+  ) private returns (bool) {
+    if (to.isContract()) {
+      try
+        IKIP37Receiver(to).onKIP37BatchReceived(
+          operator,
+          from,
+          ids,
+          amounts,
+          data
+        )
+      returns (bytes4 retval) {
+        return retval == IKIP37Receiver.onKIP37BatchReceived.selector;
+      } catch (bytes memory reason) {
+        if (reason.length == 0) {
+          return false;
+        } else {
+          assembly {
+            revert(add(32, reason), mload(reason))
+          }
+        }
+      }
+    } else {
+      return true;
+    }
+  }
+
+  function _checkOnERC1155Received(
+    address operator,
+    address from,
+    address to,
+    uint256 id,
+    uint256 amount,
+    bytes memory data
+  ) private returns (bool) {
+    if (to.isContract()) {
+      try
+        IERC1155Receiver(to).onERC1155Received(operator, from, id, amount, data)
+      returns (bytes4 retval) {
+        return retval == IERC1155Receiver.onERC1155Received.selector;
+      } catch (bytes memory reason) {
+        if (reason.length == 0) {
+          return false;
+        } else {
+          assembly {
+            revert(add(32, reason), mload(reason))
+          }
+        }
+      }
+    } else {
+      return true;
+    }
+  }
+
+  function _checkOnERC1155BatchReceived(
+    address operator,
+    address from,
+    address to,
+    uint256[] memory ids,
+    uint256[] memory amounts,
+    bytes memory data
+  ) private returns (bool) {
+    if (to.isContract()) {
+      try
+        IERC1155Receiver(to).onERC1155BatchReceived(
+          operator,
+          from,
+          ids,
+          amounts,
+          data
+        )
+      returns (bytes4 retval) {
+        return retval == IERC1155Receiver.onERC1155BatchReceived.selector;
+      } catch (bytes memory reason) {
+        if (reason.length == 0) {
+          return false;
+        } else {
+          assembly {
+            revert(add(32, reason), mload(reason))
+          }
+        }
+      }
+    } else {
+      return true;
+    }
   }
 }

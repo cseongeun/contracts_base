@@ -21,21 +21,21 @@ abstract contract ERC721BatchTransferable is ERC721 {
   ) public virtual returns (bool) {
     require(
       accounts.length == tokenIds.length,
-      "ERC721BatchTransferable: invalid length"
+      "BatchTransferable: invalid length"
     );
 
     for (uint256 i = 0; i < accounts.length; i++) {
-      // require(
-      //   safeTransferFrom(_msgSender(), accounts[i], tokenIds[i]),
-      //   string(
-      //     abi.encodePacked(
-      //       "ERC721BatchTransfable: can not transfer ",
-      //       Strings.toString(tokenIds[i]),
-      //       "ID to ",
-      //       Strings.toHexString(uint160(accounts[i]), 20)
-      //     )
-      //   )
-      // );
+      require(
+        transferFrom(_msgSender(), accounts[i], tokenIds[i]),
+        string(
+          abi.encodePacked(
+            "BatchTransfable: can not transfer ",
+            Strings.toString(tokenIds[i]),
+            "ID to ",
+            Strings.toHexString(uint160(accounts[i]), 20)
+          )
+        )
+      );
     }
 
     return true;

@@ -417,16 +417,21 @@ contract ERC20 is
     );
   }
 
-  function safeTransfer(address recipient, uint256 amount) public virtual {
-    safeTransfer(recipient, amount, "");
-  }
-
   function safeTransfer(
     address recipient,
     uint256 amount,
     bytes memory _data
-  ) public virtual {
+  ) public virtual returns (bool) {
     _safeTransfer(recipient, amount, _data);
+    return true;
+  }
+
+  function safeTransfer(address recipient, uint256 amount)
+    public
+    virtual
+    returns (bool)
+  {
+    return safeTransfer(recipient, amount, "");
   }
 
   function _safeTransferFrom(
@@ -446,18 +451,19 @@ contract ERC20 is
   function safeTransferFrom(
     address sender,
     address recipient,
-    uint256 amount
-  ) public virtual {
-    safeTransferFrom(sender, recipient, amount, "");
+    uint256 amount,
+    bytes memory _data
+  ) public virtual returns (bool) {
+    _safeTransferFrom(sender, recipient, amount, _data);
+    return true;
   }
 
   function safeTransferFrom(
     address sender,
     address recipient,
-    uint256 amount,
-    bytes memory _data
-  ) public virtual {
-    _safeTransferFrom(sender, recipient, amount, _data);
+    uint256 amount
+  ) public virtual returns (bool) {
+    return safeTransferFrom(sender, recipient, amount, "");
   }
 
   function _checkOnERC20Received(

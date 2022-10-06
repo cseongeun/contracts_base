@@ -67,7 +67,7 @@ interface IERC721 is IERC165 {
     address to,
     uint256 tokenId,
     bytes calldata data
-  ) external;
+  ) external returns (bool);
 
   /**
    * @dev Safely transfers `tokenId` token from `from` to `to`, checking first that contract recipients
@@ -87,7 +87,7 @@ interface IERC721 is IERC165 {
     address from,
     address to,
     uint256 tokenId
-  ) external;
+  ) external returns (bool);
 
   /**
    * @dev Transfers `tokenId` token from `from` to `to`.
@@ -107,7 +107,7 @@ interface IERC721 is IERC165 {
     address from,
     address to,
     uint256 tokenId
-  ) external;
+  ) external returns (bool);
 
   /**
    * @dev Gives permission to `to` to transfer `tokenId` token to another account.

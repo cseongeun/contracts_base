@@ -11,7 +11,7 @@ import { ERC1155 } from "../ERC1155.sol";
  * corresponding is an NFT, there is no guarantees that no other token with the
  * same id are not going to be minted.
  */
-abstract contract ERC1155Supply is ERC1155 {
+abstract contract ERC1155SupplyTrackable is ERC1155 {
   mapping(uint256 => uint256) private _totalSupply;
 
   /**
@@ -25,7 +25,7 @@ abstract contract ERC1155Supply is ERC1155 {
    * @dev Indicates whether any token exist with a given id, or not.
    */
   function exists(uint256 id) public view virtual returns (bool) {
-    return ERC1155Supply.totalSupply(id) > 0;
+    return ERC1155SupplyTrackable.totalSupply(id) > 0;
   }
 
   /**

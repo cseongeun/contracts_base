@@ -79,6 +79,6 @@
     "yargs": "^17.0.0"
   },
   "dependencies": {
-    "@seongeun/standard-contract-wizard": "0.0.81"
+    "@seongeun/standard-contract-wizard": "^0.0.88"
   }
 }

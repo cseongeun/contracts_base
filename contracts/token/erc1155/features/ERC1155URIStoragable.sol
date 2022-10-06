@@ -11,7 +11,7 @@ import { ERC1155 } from "../ERC1155.sol";
  *
  * _Available since v4.6._
  */
-abstract contract ERC1155URIStorage is ERC1155 {
+abstract contract ERC1155URIStoragable is ERC1155 {
   using Strings for uint256;
 
   // Optional base URI

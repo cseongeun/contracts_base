@@ -1,10 +1,10 @@
 import { ethers } from "hardhat";
 import { expect } from "chai";
 import { BigNumber, Contract } from "ethers";
-import { time } from "../../util/time";
+import { time } from "../../../util/time";
 import { SignerWithAddress } from "@nomiclabs/hardhat-ethers/signers";
-import { formatStruct, randomBytes } from "../../util/string";
-import { generateERC20Mocks } from "../../util/generator";
+import { formatStruct, randomBytes } from "../../../util/string";
+import { generateERC20Mocks } from "../../../util/generator";
 
 const { AddressZero, Zero, One, Two } = ethers.constants;
 const Three: BigNumber = BigNumber.from(3);

@@ -3,12 +3,12 @@ pragma solidity ^0.8.0;
 
 abstract contract ERC1155Feature {
   enum FeatureType {
-    URI,
     PAUSABLE,
     FREEZABLE,
     BURNABLE,
     MINTABLE,
-    SUPPLY
+    SUPPLY_TRACKABLE,
+    URI_STORAGABLE
   }
 
   enum Access {
@@ -18,12 +18,12 @@ abstract contract ERC1155Feature {
   }
 
   struct Features {
-    bool uri;
     bool pausable;
     bool freezable;
     bool burnable;
     bool mintable;
-    bool supply;
+    bool supplyTrackable;
+    bool uriStoragable;
   }
 
   Features public features;
@@ -34,18 +34,16 @@ abstract contract ERC1155Feature {
     returns (bool)
   {
     Features memory _features = Features({
-      uri: false,
       pausable: false,
       freezable: false,
       burnable: false,
       mintable: false,
-      supply: false
+      supplyTrackable: false,
+      uriStoragable: false
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
-      if (_featureType[i] == FeatureType.URI) {
-        _features.uri = true;
-      } else if (_featureType[i] == FeatureType.PAUSABLE) {
+      if (_featureType[i] == FeatureType.PAUSABLE) {
         _features.pausable = true;
       } else if (_featureType[i] == FeatureType.FREEZABLE) {
         _features.freezable = true;
@@ -53,8 +51,10 @@ abstract contract ERC1155Feature {
         _features.burnable = true;
       } else if (_featureType[i] == FeatureType.MINTABLE) {
         _features.mintable = true;
-      } else if (_featureType[i] == FeatureType.SUPPLY) {
-        _features.supply = true;
+      } else if (_featureType[i] == FeatureType.SUPPLY_TRACKABLE) {
+        _features.supplyTrackable = true;
+      } else if (_featureType[i] == FeatureType.URI_STORAGABLE) {
+        _features.uriStoragable = true;
       }
     }
 
