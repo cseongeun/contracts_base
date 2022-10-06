@@ -5,7 +5,6 @@ abstract contract ERC20Feature {
   string public v = "ERC20v1";
 
   enum FeatureType {
-    CAPPED,
     BURNABLE,
     FREEZABLE,
     PAUSABLE,
@@ -21,7 +20,6 @@ abstract contract ERC20Feature {
   }
 
   struct Features {
-    bool capped;
     bool burnable;
     bool freezable;
     bool pausable;
@@ -38,7 +36,6 @@ abstract contract ERC20Feature {
     returns (bool)
   {
     Features memory _features = Features({
-      capped: false,
       burnable: false,
       freezable: false,
       pausable: false,
@@ -48,9 +45,7 @@ abstract contract ERC20Feature {
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
-      if (_featureType[i] == FeatureType.CAPPED) {
-        _features.capped = true;
-      } else if (_featureType[i] == FeatureType.BURNABLE) {
+      if (_featureType[i] == FeatureType.BURNABLE) {
         _features.burnable = true;
       } else if (_featureType[i] == FeatureType.FREEZABLE) {
         _features.freezable = true;
