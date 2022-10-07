@@ -39,10 +39,10 @@ describe("ERC721OwnableMock", function () {
         symbol: tokenSymbol,
       },
       features: {
-        // burnable: true,
-        // pausable: true,
-        // freezable: true,
-        // batchTransferable: true,
+        burnable: true,
+        pausable: true,
+        freezable: true,
+        batchTransferable: true,
       },
     });
 

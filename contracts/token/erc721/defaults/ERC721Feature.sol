@@ -2,7 +2,7 @@
 pragma solidity ^0.8.0;
 
 abstract contract ERC721Feature {
-  string public v = "ERC2721v1";
+  string public v = "ERC721v1";
 
   enum FeatureType {
     PAUSABLE,
