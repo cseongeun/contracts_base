@@ -33,18 +33,6 @@ describe("ERC1155OwnableMock", function () {
   );
 
   before(async function () {
-    generateERC1155Mocks({
-      metadata: {
-        name: tokenName,
-        baseURI: "www.hexlant.com/",
-      },
-      features: {
-        // burnable: true,
-        // pausable: true,
-        // freezable: true,
-      },
-    });
-
     const accounts = await ethers.getSigners();
     [owner, user1, user2, user3] = accounts;
   });
