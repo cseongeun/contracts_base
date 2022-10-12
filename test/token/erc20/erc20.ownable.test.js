@@ -30,7 +30,6 @@ describe("ERC20OwnableMock", function () {
                 name: tokenName,
                 symbol: tokenSymbol,
                 premint: tokenInitalSupplyRaw,
-                capped: tokenSupplyCappedRaw,
             },
             features: {
                 burnable: true,
