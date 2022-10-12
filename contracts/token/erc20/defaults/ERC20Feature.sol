@@ -10,7 +10,6 @@ abstract contract ERC20Feature {
     PAUSABLE,
     MINTABLE,
     LOCKABLE,
-    BATCH_TRANSFERABLE
   }
 
   enum Access {
@@ -25,7 +24,6 @@ abstract contract ERC20Feature {
     bool pausable;
     bool mintable;
     bool lockable;
-    bool batchTransferable;
   }
 
   Features public features;
@@ -41,7 +39,6 @@ abstract contract ERC20Feature {
       pausable: false,
       mintable: false,
       lockable: false,
-      batchTransferable: false
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
@@ -55,9 +52,7 @@ abstract contract ERC20Feature {
         _features.mintable = true;
       } else if (_featureType[i] == FeatureType.LOCKABLE) {
         _features.lockable = true;
-      } else if (_featureType[i] == FeatureType.BATCH_TRANSFERABLE) {
-        _features.batchTransferable = true;
-      }
+      } 
     }
 
     features = _features;
