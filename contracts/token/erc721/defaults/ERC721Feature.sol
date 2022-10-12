@@ -8,7 +8,6 @@ abstract contract ERC721Feature {
     PAUSABLE,
     BURNABLE,
     FREEZABLE,
-    BATCH_TRRANSFERABLE
   }
 
   enum Access {
@@ -21,7 +20,6 @@ abstract contract ERC721Feature {
     bool pausable;
     bool burnable;
     bool freezable;
-    bool batchTransferable;
   }
 
   Features public features;
@@ -35,7 +33,6 @@ abstract contract ERC721Feature {
       pausable: false,
       burnable: false,
       freezable: false,
-      batchTransferable: false
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
@@ -45,9 +42,7 @@ abstract contract ERC721Feature {
         _features.burnable = true;
       } else if (_featureType[i] == FeatureType.FREEZABLE) {
         _features.freezable = true;
-      } else if (_featureType[i] == FeatureType.BATCH_TRRANSFERABLE) {
-        _features.batchTransferable = true;
-      }
+      } 
     }
 
     features = _features;
