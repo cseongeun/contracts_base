@@ -9,7 +9,7 @@ abstract contract ERC20Feature {
     FREEZABLE,
     PAUSABLE,
     MINTABLE,
-    LOCKABLE,
+    LOCKABLE
   }
 
   enum Access {
@@ -38,7 +38,7 @@ abstract contract ERC20Feature {
       freezable: false,
       pausable: false,
       mintable: false,
-      lockable: false,
+      lockable: false
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
@@ -52,7 +52,7 @@ abstract contract ERC20Feature {
         _features.mintable = true;
       } else if (_featureType[i] == FeatureType.LOCKABLE) {
         _features.lockable = true;
-      } 
+      }
     }
 
     features = _features;

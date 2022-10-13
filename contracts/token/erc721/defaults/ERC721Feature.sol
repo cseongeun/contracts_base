@@ -7,7 +7,7 @@ abstract contract ERC721Feature {
   enum FeatureType {
     PAUSABLE,
     BURNABLE,
-    FREEZABLE,
+    FREEZABLE
   }
 
   enum Access {
@@ -32,7 +32,7 @@ abstract contract ERC721Feature {
     Features memory _features = Features({
       pausable: false,
       burnable: false,
-      freezable: false,
+      freezable: false
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
@@ -42,7 +42,7 @@ abstract contract ERC721Feature {
         _features.burnable = true;
       } else if (_featureType[i] == FeatureType.FREEZABLE) {
         _features.freezable = true;
-      } 
+      }
     }
 
     features = _features;
