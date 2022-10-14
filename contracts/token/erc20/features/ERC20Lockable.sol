@@ -241,16 +241,21 @@ abstract contract ERC20Lockable is ERC20 {
    * @dev Extends lock for a specified reason and time
    * @param account The account which lock release will increase
    * @param reason The reason to lock tokens
-   * @param time Lock extension release time in seconds
+   * @param extendRelease Lock extension release time
    */
   function _extendLock(
     address account,
     bytes32 reason,
-    uint256 time
+    uint256 extendRelease
   ) internal virtual returns (bool) {
     require(tokensLocked(account, reason) > 0, "Lockable: No tokens locked");
 
-    locked[account][reason].release = locked[account][reason].release + time;
+    require(
+      locked[account][reason].release > extendRelease,
+      "Lockable: Cannot be past the current release time"
+    );
+
+    locked[account][reason].release = extendRelease;
 
     emit Locked(
       account,
