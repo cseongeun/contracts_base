@@ -1,123 +1,11 @@
-// Sources flattened with hardhat v2.11.1 https://hardhat.org
-
-// File contracts/common/utils/Context.sol
-// SPDX-License-Identifier: MIT
-
-// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
-pragma solidity ^0.8.1;
-
-
-/**
- * @dev Provides information about the current execution context, including the
- * sender of the transaction and its data. While these are generally available
- * via msg.sender and msg.data, they should not be accessed in such a direct
- * manner, since when dealing with meta-transactions the account sending and
- * paying for execution may not be the actual sender (as far as an application
- * is concerned).
- *
- * This contract is only required for intermediate, library-like contracts.
- */
-abstract contract Context {
-    function _msgSender() internal view virtual returns (address) {
-        return msg.sender;
-    }
-
-    function _msgData() internal view virtual returns (bytes calldata) {
-        return msg.data;
-    }
-}
-
-
-// File contracts/common/access/Ownable.sol
-
-// OpenZeppelin Contracts (last updated v4.7.0) (access/Ownable.sol)
-
-
-/**
- * @dev Contract module which provides a basic access control mechanism, where
- * there is an account (an owner) that can be granted exclusive access to
- * specific functions.
- *
- * By default, the owner account will be the one that deploys the contract. This
- * can later be changed with {transferOwnership}.
- *
- * This module is used through inheritance. It will make available the modifier
- * `onlyOwner`, which can be applied to your functions to restrict their use to
- * the owner.
- */
-abstract contract Ownable is Context {
-  address private _owner;
-
-  event OwnershipTransferred(
-    address indexed previousOwner,
-    address indexed newOwner
-  );
-
-  /**
-   * @dev Initializes the contract setting the deployer as the initial owner.
-   */
-  constructor() {
-    _transferOwnership(_msgSender());
-  }
-
-  /**
-   * @dev Throws if called by any account other than the owner.
-   */
-  modifier onlyOwner() {
-    _checkOwner();
-    _;
-  }
-
-  /**
-   * @dev Returns the address of the current owner.
-   */
-  function owner() public view virtual returns (address) {
-    return _owner;
-  }
-
-  /**
-   * @dev Throws if the sender is not the owner.
-   */
-  function _checkOwner() internal view virtual {
-    require(owner() == _msgSender(), "Ownable: caller is not the owner");
-  }
-
-  /**
-   * @dev Leaves the contract without owner. It will not be possible to call
-   * `onlyOwner` functions anymore. Can only be called by the current owner.
-   *
-   * NOTE: Renouncing ownership will leave the contract without an owner,
-   * thereby removing any functionality that is only available to the owner.
-   */
-  function renounceOwnership() public virtual onlyOwner {
-    _transferOwnership(address(0));
-  }
-
-  /**
-   * @dev Transfers ownership of the contract to a new account (`newOwner`).
-   * Can only be called by the current owner.
-   */
-  function transferOwnership(address newOwner) public virtual onlyOwner {
-    require(newOwner != address(0), "Ownable: new owner is the zero address");
-    _transferOwnership(newOwner);
-  }
-
-  /**
-   * @dev Transfers ownership of the contract to a new account (`newOwner`).
-   * Internal function without access restriction.
-   */
-  function _transferOwnership(address newOwner) internal virtual {
-    address oldOwner = _owner;
-    _owner = newOwner;
-    emit OwnershipTransferred(oldOwner, newOwner);
-  }
-}
-
+// Sources flattened with hardhat v2.11.0 https://hardhat.org
 
 // File contracts/common/utils/Address.sol
 
+// SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v4.7.0) (utils/Address.sol)
 
+pragma solidity ^0.8.1;
 
 /**
  * @dev Collection of functions related to the address type
@@ -338,10 +226,40 @@ library Address {
 }
 
 
+// File contracts/common/utils/Context.sol
+
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.1 (utils/Context.sol)
+
+pragma solidity ^0.8.0;
+
+/**
+ * @dev Provides information about the current execution context, including the
+ * sender of the transaction and its data. While these are generally available
+ * via msg.sender and msg.data, they should not be accessed in such a direct
+ * manner, since when dealing with meta-transactions the account sending and
+ * paying for execution may not be the actual sender (as far as an application
+ * is concerned).
+ *
+ * This contract is only required for intermediate, library-like contracts.
+ */
+abstract contract Context {
+    function _msgSender() internal view virtual returns (address) {
+        return msg.sender;
+    }
+
+    function _msgData() internal view virtual returns (bytes calldata) {
+        return msg.data;
+    }
+}
+
+
 // File contracts/common/utils/Strings.sol
 
+// SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v4.7.0) (utils/Strings.sol)
 
+pragma solidity ^0.8.0;
 
 /**
  * @dev String operations.
@@ -417,6 +335,8 @@ library Strings {
 
 // File contracts/common/utils/introspection/IERC165.sol
 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 /**
  * @dev Interface of the ERC165 standard, as defined in the
@@ -442,7 +362,9 @@ interface IERC165 {
 
 // File contracts/token/erc721/interfaces/IERC721.sol
 
+// SPDX-License-Identifier: MIT
 
+pragma solidity ^0.8.0;
 
 /**
  * @dev Required interface of an ERC721 compliant contract.
@@ -602,8 +524,10 @@ interface IERC721 is IERC165 {
 
 // File contracts/token/erc721/interfaces/IERC721Receiver.sol
 
+// SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts (last updated v4.6.0) (token/ERC721/IERC721Receiver.sol)
 
+pragma solidity ^0.8.0;
 
 /**
  * @title ERC721 token receiver interface
@@ -631,6 +555,8 @@ interface IERC721Receiver {
 
 // File contracts/token/erc721/interfaces/IKIP17Receiver.sol
 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 /**
  * @title KIP17 token receiver interface
@@ -658,6 +584,8 @@ interface IKIP17Receiver {
 
 // File contracts/token/erc721/interfaces/IERC721Metadata.sol
 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 /**
  * @title ERC-721 Non-Fungible Token Standard, optional metadata extension
@@ -683,8 +611,10 @@ interface IERC721Metadata is IERC721 {
 
 // File contracts/common/utils/introspection/ERC165.sol
 
+// SPDX-License-Identifier: MIT
 // OpenZeppelin Contracts v4.4.1 (utils/introspection/ERC165.sol)
 
+pragma solidity ^0.8.0;
 
 /**
  * @dev Implementation of the {IERC165} interface.
@@ -712,6 +642,8 @@ abstract contract ERC165 is IERC165 {
 
 // File contracts/token/erc721/defaults/ERC721Feature.sol
 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 abstract contract ERC721Feature {
   string public v = "ERC721v1";
@@ -719,8 +651,7 @@ abstract contract ERC721Feature {
   enum FeatureType {
     PAUSABLE,
     BURNABLE,
-    FREEZABLE,
-    BATCH_TRRANSFERABLE
+    FREEZABLE
   }
 
   enum Access {
@@ -733,7 +664,6 @@ abstract contract ERC721Feature {
     bool pausable;
     bool burnable;
     bool freezable;
-    bool batchTransferable;
   }
 
   Features public features;
@@ -746,8 +676,7 @@ abstract contract ERC721Feature {
     Features memory _features = Features({
       pausable: false,
       burnable: false,
-      freezable: false,
-      batchTransferable: false
+      freezable: false
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
@@ -757,8 +686,6 @@ abstract contract ERC721Feature {
         _features.burnable = true;
       } else if (_featureType[i] == FeatureType.FREEZABLE) {
         _features.freezable = true;
-      } else if (_featureType[i] == FeatureType.BATCH_TRRANSFERABLE) {
-        _features.batchTransferable = true;
       }
     }
 
@@ -775,6 +702,8 @@ abstract contract ERC721Feature {
 
 // File contracts/token/erc721/ERC721.sol
 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 
 
@@ -1338,9 +1267,146 @@ contract ERC721 is Context, ERC165, IERC721, IERC721Metadata, ERC721Feature {
 }
 
 
+// File contracts/common/access/Ownable.sol
+
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts (last updated v4.7.0) (access/Ownable.sol)
+
+pragma solidity ^0.8.0;
+
+/**
+ * @dev Contract module which provides a basic access control mechanism, where
+ * there is an account (an owner) that can be granted exclusive access to
+ * specific functions.
+ *
+ * By default, the owner account will be the one that deploys the contract. This
+ * can later be changed with {transferOwnership}.
+ *
+ * This module is used through inheritance. It will make available the modifier
+ * `onlyOwner`, which can be applied to your functions to restrict their use to
+ * the owner.
+ */
+abstract contract Ownable is Context {
+  address private _owner;
+
+  event OwnershipTransferred(
+    address indexed previousOwner,
+    address indexed newOwner
+  );
+
+  /**
+   * @dev Initializes the contract setting the deployer as the initial owner.
+   */
+  constructor() {
+    _transferOwnership(_msgSender());
+  }
+
+  /**
+   * @dev Throws if called by any account other than the owner.
+   */
+  modifier onlyOwner() {
+    _checkOwner();
+    _;
+  }
+
+  /**
+   * @dev Returns the address of the current owner.
+   */
+  function owner() public view virtual returns (address) {
+    return _owner;
+  }
+
+  /**
+   * @dev Throws if the sender is not the owner.
+   */
+  function _checkOwner() internal view virtual {
+    require(owner() == _msgSender(), "Ownable: caller is not the owner");
+  }
+
+  /**
+   * @dev Leaves the contract without owner. It will not be possible to call
+   * `onlyOwner` functions anymore. Can only be called by the current owner.
+   *
+   * NOTE: Renouncing ownership will leave the contract without an owner,
+   * thereby removing any functionality that is only available to the owner.
+   */
+  function renounceOwnership() public virtual onlyOwner {
+    _transferOwnership(address(0));
+  }
+
+  /**
+   * @dev Transfers ownership of the contract to a new account (`newOwner`).
+   * Can only be called by the current owner.
+   */
+  function transferOwnership(address newOwner) public virtual onlyOwner {
+    require(newOwner != address(0), "Ownable: new owner is the zero address");
+    _transferOwnership(newOwner);
+  }
+
+  /**
+   * @dev Transfers ownership of the contract to a new account (`newOwner`).
+   * Internal function without access restriction.
+   */
+  function _transferOwnership(address newOwner) internal virtual {
+    address oldOwner = _owner;
+    _owner = newOwner;
+    emit OwnershipTransferred(oldOwner, newOwner);
+  }
+}
+
+
+// File contracts/common/utils/Counters.sol
+
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts v4.4.1 (utils/Counters.sol)
+
+pragma solidity ^0.8.0;
+
+/**
+ * @title Counters
+ * @author Matt Condon (@shrugs)
+ * @dev Provides counters that can only be incremented, decremented or reset. This can be used e.g. to track the number
+ * of elements in a mapping, issuing ERC721 ids, or counting request ids.
+ *
+ * Include with `using Counters for Counters.Counter;`
+ */
+library Counters {
+    struct Counter {
+        // This variable should never be directly accessed by users of the library: interactions must be restricted to
+        // the library's function. As of Solidity v0.5.2, this cannot be enforced, though there is a proposal to add
+        // this feature: see https://github.com/ethereum/solidity/issues/4637
+        uint256 _value; // default: 0
+    }
+
+    function current(Counter storage counter) internal view returns (uint256) {
+        return counter._value;
+    }
+
+    function increment(Counter storage counter) internal {
+        unchecked {
+            counter._value += 1;
+        }
+    }
+
+    function decrement(Counter storage counter) internal {
+        uint256 value = counter._value;
+        require(value > 0, "Counter: decrement overflow");
+        unchecked {
+            counter._value = value - 1;
+        }
+    }
+
+    function reset(Counter storage counter) internal {
+        counter._value = 0;
+    }
+}
+
+
 // File contracts/token/erc721/defaults/ERC721URIStoragable.sol
 
+// SPDX-License-Identifier: MIT
 
+pragma solidity ^0.8.0;
 
 
 /**
@@ -1409,159 +1475,46 @@ abstract contract ERC721URIStoragable is ERC721 {
 }
 
 
-// File contracts/token/erc721/features/ERC721Burnable.sol
+// File contracts/token/erc721/features/ERC721Freezable.sol
 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
-
-
-/**
- * @title ERC721 Burnable Token
- * @dev ERC721 Token that can be burned (destroyed).
- */
-abstract contract ERC721Burnable is Context, ERC721 {
+abstract contract ERC721Freezable is ERC721 {
   /**
-   * @dev Burns `tokenId`. See {ERC721-_burn}.
+   * @dev user freezed
+   * */
+  mapping(address => bool) private freezed;
+
+  /**
+   * @dev Emitted when user freezed
+   */
+  event Freezed(address account);
+
+  /**
+   * @dev Emitted when user unfreezed
+   */
+  event UnFreezed(address account);
+
+  /**
+   * @dev  Returns true if account is freezed, and false otherwise.
    *
-   * Requirements:
-   *
-   * - The caller must own `tokenId` or be an approved operator.
+   * @param account The address
    */
-  function burn(uint256 tokenId) public virtual {
-    //solhint-disable-next-line max-line-length
-    require(
-      _isApprovedOrOwner(_msgSender(), tokenId),
-      "ERC721: caller is not token owner nor approved"
-    );
-    _burn(tokenId);
-  }
-}
-
-
-// File contracts/common/security/Pausable.sol
-
-// OpenZeppelin Contracts (last updated v4.7.0) (security/Pausable.sol)
-
-
-/**
- * @dev Contract module which allows children to implement an emergency stop
- * mechanism that can be triggered by an authorized account.
- *
- * This module is used through inheritance. It will make available the
- * modifiers `whenNotPaused` and `whenPaused`, which can be applied to
- * the functions of your contract. Note that they will not be pausable by
- * simply including this module, only once the modifiers are put in place.
- */
-abstract contract Pausable is Context {
-  bool private _paused;
-
-  /**
-   * @dev Emitted when the pause is triggered by `account`.
-   */
-  event Paused(address account);
-
-  /**
-   * @dev Emitted when the pause is lifted by `account`.
-   */
-  event Unpaused(address account);
-
-  /**
-   * @dev Initializes the contract in UnPaused state.
-   */
-  constructor() {
-    _paused = false;
+  function isFreezed(address account) public view returns (bool) {
+    return freezed[account];
   }
 
-  /**
-   * @dev Modifier to make a function callable only when the contract is not paused.
-   *
-   * Requirements:
-   *
-   * - The contract must not be paused.
-   */
-  modifier whenNotPaused() {
-    _requireNotPaused();
-    _;
+  function _freeze(address account) internal virtual {
+    freezed[account] = true;
+    emit Freezed(account);
   }
 
-  /**
-   * @dev Modifier to make a function callable only when the contract is paused.
-   *
-   * Requirements:
-   *
-   * - The contract must be paused.
-   */
-  modifier whenPaused() {
-    _requirePaused();
-    _;
+  function _unfreeze(address account) internal virtual {
+    freezed[account] = false;
+    emit UnFreezed(account);
   }
 
-  /**
-   * @dev Returns true if the contract is paused, and false otherwise.
-   */
-  function paused() public view virtual returns (bool) {
-    return _paused;
-  }
-
-  /**
-   * @dev Throws if the contract is paused.
-   */
-  function _requireNotPaused() internal view virtual {
-    require(!paused(), "Pausable: paused");
-  }
-
-  /**
-   * @dev Throws if the contract is not paused.
-   */
-  function _requirePaused() internal view virtual {
-    require(paused(), "Pausable: not paused");
-  }
-
-  /**
-   * @dev Triggers stopped state.
-   *
-   * Requirements:
-   *
-   * - The contract must not be paused.
-   */
-  function _pause() internal virtual whenNotPaused {
-    _paused = true;
-    emit Paused(_msgSender());
-  }
-
-  /**
-   * @dev Returns to normal state.
-   *
-   * Requirements:
-   *
-   * - The contract must be paused.
-   */
-  function _unpause() internal virtual whenPaused {
-    _paused = false;
-    emit Unpaused(_msgSender());
-  }
-}
-
-
-// File contracts/token/erc721/features/ERC721Pausable.sol
-
-
-
-
-/**
- * @dev ERC721 token with pausable token transfers, minting and burning.
- *
- * Useful for scenarios such as preventing trades until the end of an evaluation
- * period, or having an emergency switch for freezing all token transfers in the
- * event of a large bug.
- */
-abstract contract ERC721Pausable is ERC721, Pausable {
-  /**
-   * @dev See {ERC721-_beforeTokenTransfer}.
-   *
-   * Requirements:
-   *
-   * - the contract must not be paused.
-   */
   function _beforeTokenTransfer(
     address from,
     address to,
@@ -1569,14 +1522,18 @@ abstract contract ERC721Pausable is ERC721, Pausable {
   ) internal virtual override {
     super._beforeTokenTransfer(from, to, tokenId);
 
-    require(!paused(), "Pausable: token transfer while paused");
+    require(!freezed[_msgSender()], "Freezable: sender freezed");
+    require(!freezed[from], "Freezable: from freezed");
+    require(!freezed[to], "Freezable: to freezed");
   }
 }
 
 
 // File contracts/token/erc721/interfaces/IERC721Enumerable.sol
 
+// SPDX-License-Identifier: MIT
 
+pragma solidity ^0.8.0;
 
 /**
  * @title ERC-721 Non-Fungible Token Standard, optional enumeration extension
@@ -1607,6 +1564,8 @@ interface IERC721Enumerable is IERC721 {
 
 // File contracts/token/erc721/defaults/ERC721Enumerable.sol
 
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
 
 
 
@@ -1795,87 +1754,135 @@ abstract contract ERC721Enumerable is ERC721, IERC721Enumerable {
 }
 
 
-// File contracts/token/erc721/features/ERC721BatchTransferable.sol
+// File contracts/common/security/Pausable.sol
 
+// SPDX-License-Identifier: MIT
+// OpenZeppelin Contracts (last updated v4.7.0) (security/Pausable.sol)
 
+pragma solidity ^0.8.0;
 
 /**
- * @dev Extension of {ERC721} that adds batch transfer of tokens.
+ * @dev Contract module which allows children to implement an emergency stop
+ * mechanism that can be triggered by an authorized account.
+ *
+ * This module is used through inheritance. It will make available the
+ * modifiers `whenNotPaused` and `whenPaused`, which can be applied to
+ * the functions of your contract. Note that they will not be pausable by
+ * simply including this module, only once the modifiers are put in place.
  */
-abstract contract ERC721BatchTransferable is ERC721 {
+abstract contract Pausable is Context {
+  bool private _paused;
+
   /**
-   * @dev Batch transfer of multiple tokens to multiple addresses
+   * @dev Emitted when the pause is triggered by `account`.
+   */
+  event Paused(address account);
+
+  /**
+   * @dev Emitted when the pause is lifted by `account`.
+   */
+  event Unpaused(address account);
+
+  /**
+   * @dev Initializes the contract in UnPaused state.
+   */
+  constructor() {
+    _paused = false;
+  }
+
+  /**
+   * @dev Modifier to make a function callable only when the contract is not paused.
    *
    * Requirements:
    *
-   * - the number of 'accounts' and the id of 'tokenIds' must be the same.
+   * - The contract must not be paused.
    */
-  function batchTransfer(
-    address[] calldata accounts,
-    uint256[] calldata tokenIds
-  ) public virtual returns (bool) {
-    require(
-      accounts.length == tokenIds.length,
-      "BatchTransferable: invalid length"
-    );
+  modifier whenNotPaused() {
+    _requireNotPaused();
+    _;
+  }
 
-    for (uint256 i = 0; i < accounts.length; i++) {
-      require(
-        transferFrom(_msgSender(), accounts[i], tokenIds[i]),
-        string(
-          abi.encodePacked(
-            "BatchTransfable: can not transfer ",
-            Strings.toString(tokenIds[i]),
-            "ID to ",
-            Strings.toHexString(uint160(accounts[i]), 20)
-          )
-        )
-      );
-    }
+  /**
+   * @dev Modifier to make a function callable only when the contract is paused.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
+   */
+  modifier whenPaused() {
+    _requirePaused();
+    _;
+  }
 
-    return true;
+  /**
+   * @dev Returns true if the contract is paused, and false otherwise.
+   */
+  function paused() public view virtual returns (bool) {
+    return _paused;
+  }
+
+  /**
+   * @dev Throws if the contract is paused.
+   */
+  function _requireNotPaused() internal view virtual {
+    require(!paused(), "Pausable: paused");
+  }
+
+  /**
+   * @dev Throws if the contract is not paused.
+   */
+  function _requirePaused() internal view virtual {
+    require(paused(), "Pausable: not paused");
+  }
+
+  /**
+   * @dev Triggers stopped state.
+   *
+   * Requirements:
+   *
+   * - The contract must not be paused.
+   */
+  function _pause() internal virtual whenNotPaused {
+    _paused = true;
+    emit Paused(_msgSender());
+  }
+
+  /**
+   * @dev Returns to normal state.
+   *
+   * Requirements:
+   *
+   * - The contract must be paused.
+   */
+  function _unpause() internal virtual whenPaused {
+    _paused = false;
+    emit Unpaused(_msgSender());
   }
 }
 
 
-// File contracts/token/erc721/features/ERC721Freezable.sol
+// File contracts/token/erc721/features/ERC721Pausable.sol
+
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.0;
 
 
-abstract contract ERC721Freezable is ERC721 {
+/**
+ * @dev ERC721 token with pausable token transfers, minting and burning.
+ *
+ * Useful for scenarios such as preventing trades until the end of an evaluation
+ * period, or having an emergency switch for freezing all token transfers in the
+ * event of a large bug.
+ */
+abstract contract ERC721Pausable is ERC721, Pausable {
   /**
-   * @dev user freezed
-   * */
-  mapping(address => bool) private freezed;
-
-  /**
-   * @dev Emitted when user freezed
-   */
-  event Freezed(address account);
-
-  /**
-   * @dev Emitted when user unfreezed
-   */
-  event UnFreezed(address account);
-
-  /**
-   * @dev  Returns true if account is freezed, and false otherwise.
+   * @dev See {ERC721-_beforeTokenTransfer}.
    *
-   * @param account The address
+   * Requirements:
+   *
+   * - the contract must not be paused.
    */
-  function isFreezed(address account) public view returns (bool) {
-    return freezed[account];
-  }
-
-  function _freeze(address account) internal virtual {
-    freezed[account] = true;
-    emit Freezed(account);
-  }
-
-  function _unfreeze(address account) internal virtual {
-    freezed[account] = false;
-    emit UnFreezed(account);
-  }
-
   function _beforeTokenTransfer(
     address from,
     address to,
@@ -1883,15 +1890,44 @@ abstract contract ERC721Freezable is ERC721 {
   ) internal virtual override {
     super._beforeTokenTransfer(from, to, tokenId);
 
-    require(!freezed[_msgSender()], "Freezable: sender freezed");
-    require(!freezed[from], "Freezable: from freezed");
-    require(!freezed[to], "Freezable: to freezed");
+    require(!paused(), "Pausable: token transfer while paused");
+  }
+}
+
+
+// File contracts/token/erc721/features/ERC721Burnable.sol
+
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.0;
+
+
+/**
+ * @title ERC721 Burnable Token
+ * @dev ERC721 Token that can be burned (destroyed).
+ */
+abstract contract ERC721Burnable is Context, ERC721 {
+  /**
+   * @dev Burns `tokenId`. See {ERC721-_burn}.
+   *
+   * Requirements:
+   *
+   * - The caller must own `tokenId` or be an approved operator.
+   */
+  function burn(uint256 tokenId) public virtual {
+    //solhint-disable-next-line max-line-length
+    require(
+      _isApprovedOrOwner(_msgSender(), tokenId),
+      "ERC721: caller is not token owner nor approved"
+    );
+    _burn(tokenId);
   }
 }
 
 
 // File contracts/mock/token/erc721/ERC721OwnableMock.sol
 
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.4;
 
 
@@ -1901,31 +1937,42 @@ pragma solidity ^0.8.4;
 
 
 
-contract ERC721OwnableMock is ERC721, ERC721URIStoragable, ERC721Enumerable, Ownable, ERC721Freezable, ERC721Pausable, ERC721Burnable, ERC721BatchTransferable {
+contract ERC721OwnableMock is ERC721, ERC721URIStoragable, ERC721Enumerable, Ownable, ERC721Freezable, ERC721Pausable, ERC721Burnable {
+    using Counters for Counters.Counter;
+
+    Counters.Counter private _tokenIdCounter;
+
     constructor() ERC721("ERC721OwnableMock", "EOMK") {
-        FeatureType[] memory _features = new FeatureType[](4);
+        FeatureType[] memory _features = new FeatureType[](3);
         _features[0] = FeatureType.FREEZABLE;
         _features[1] = FeatureType.PAUSABLE;
         _features[2] = FeatureType.BURNABLE;
-        _features[3] = FeatureType.BATCH_TRRANSFERABLE;
         
         _setFeatures(_features);
         _setAccess(Access.NONE);
     }
 
-    function safeMint(address to, uint256 tokenId, string memory uri)
-        public
-        onlyOwner
-    {
+    function safeMint(address to, string memory uri) public onlyOwner {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
         _safeMint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
 
-    function safeMint(address to, uint256 tokenId, string memory uri, bytes memory data)
+    function safeMint(address to, string memory uri, bytes memory data)
         public
         onlyOwner
     {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
         _safeMint(to, tokenId, data);
+        _setTokenURI(tokenId, uri);
+    }
+
+    function mint(address to, string memory uri) public onlyOwner {
+        uint256 tokenId = _tokenIdCounter.current();
+        _tokenIdCounter.increment();
+        _mint(to, tokenId);
         _setTokenURI(tokenId, uri);
     }
 

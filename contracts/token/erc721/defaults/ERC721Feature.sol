@@ -7,7 +7,8 @@ abstract contract ERC721Feature {
   enum FeatureType {
     PAUSABLE,
     BURNABLE,
-    FREEZABLE
+    FREEZABLE,
+    AUTO_INCREMENT_ID
   }
 
   enum Access {
@@ -20,6 +21,7 @@ abstract contract ERC721Feature {
     bool pausable;
     bool burnable;
     bool freezable;
+    bool autoIncrementId;
   }
 
   Features public features;
@@ -32,7 +34,8 @@ abstract contract ERC721Feature {
     Features memory _features = Features({
       pausable: false,
       burnable: false,
-      freezable: false
+      freezable: false,
+      autoIncrementId: false
     });
 
     for (uint256 i = 0; i < _featureType.length; i++) {
@@ -42,6 +45,8 @@ abstract contract ERC721Feature {
         _features.burnable = true;
       } else if (_featureType[i] == FeatureType.FREEZABLE) {
         _features.freezable = true;
+      } else if (_featureType[i] == FeatureType.AUTO_INCREMENT_ID) {
+        _features.autoIncrementId = true;
       }
     }
 

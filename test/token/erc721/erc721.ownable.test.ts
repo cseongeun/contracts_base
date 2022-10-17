@@ -41,8 +41,8 @@ describe("ERC721OwnableMock", function () {
       features: {
         burnable: true,
         pausable: true,
+        autoIncrementId: true,
         freezable: true,
-        batchTransferable: true,
       },
     });
 

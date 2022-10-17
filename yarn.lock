@@ -1063,10 +1063,10 @@
     "@sentry/types" "5.30.0"
     tslib "^1.9.3"
 
-"@seongeun/standard-contract-wizard@^0.0.94":
-  version "0.0.94"
-  resolved "https://registry.yarnpkg.com/@seongeun/standard-contract-wizard/-/standard-contract-wizard-0.0.94.tgz#e73934130827297a0bcc579dcf8018516834693f"
-  integrity sha512-c8/PYy1MvBQd/I5uIWFz5XdJveDnoDOWzBtT2Nw/5k1CIl5jCx0vQrmvHFIWqIxlLLU8dLjViRCRbbxc6b6cKA==
+"@seongeun/standard-contract-wizard@^0.0.101":
+  version "0.0.101"
+  resolved "https://registry.yarnpkg.com/@seongeun/standard-contract-wizard/-/standard-contract-wizard-0.0.101.tgz#80ea7aeb42226330d664528ae47df4a5d4df8c08"
+  integrity sha512-1J9CSaj0a8JgzhDdiPH6uc0Pokup+xUKZ3an+3ylJxd0w+5a2j1V3qtOunHAdL2zz43cy9YOu7oklzSEFdfOZg==
   dependencies:
     array.prototype.flatmap "^1.2.4"
     glob-promise "^5.0.0"
