@@ -14,6 +14,8 @@ abstract contract ERC721URIStoragable is ERC721 {
   // Optional mapping for token URIs
   mapping(uint256 => string) private _tokenURIs;
 
+  event SetTokenURI(uint256 indexed _tokenId, string _tokenURI);
+
   /**
    * @dev See {IERC721Metadata-tokenURI}.
    */
@@ -54,6 +56,8 @@ abstract contract ERC721URIStoragable is ERC721 {
   {
     require(_exists(tokenId), "URIStorage: URI set of nonexistent token");
     _tokenURIs[tokenId] = _tokenURI;
+
+    emit SetTokenURI(tokenId, _tokenURI);
   }
 
   /**
