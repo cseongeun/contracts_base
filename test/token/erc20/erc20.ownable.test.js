@@ -37,7 +37,6 @@ describe("ERC20OwnableMock", function () {
                 lockable: true,
                 pausable: true,
                 mintable: true,
-                batchTransferable: true,
             },
         });
         const accounts = await hardhat_1.ethers.getSigners();

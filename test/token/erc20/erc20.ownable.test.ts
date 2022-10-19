@@ -45,7 +45,6 @@ describe("ERC20OwnableMock", function () {
         lockable: true,
         pausable: true,
         mintable: true,
-        batchTransferable: true,
       },
     });
 

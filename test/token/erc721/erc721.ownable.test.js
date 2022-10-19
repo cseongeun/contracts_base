@@ -31,8 +31,8 @@ describe("ERC721OwnableMock", function () {
             features: {
                 burnable: true,
                 pausable: true,
+                autoIncrementId: true,
                 freezable: true,
-                batchTransferable: true,
             },
         });
         const accounts = await hardhat_1.ethers.getSigners();
